@@ -34,27 +34,6 @@ export function Header() {
               <span>Humi</span>
             </Link>
           </li>
-          {/* <li>
-            <Link
-              className="hover:text-primary transition-colors"
-              href="/features"
-            >
-              Features
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="hover:text-primary transition-colors"
-              href="/about"
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link className="hover:text-primary transition-colors" href="/blog">
-              Blog
-            </Link>
-          </li> */}
         </ul>
         <AuthButton />
       </nav>

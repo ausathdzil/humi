@@ -49,10 +49,10 @@ export function SignInButton() {
               callbackURL: "/",
             },
             {
-              onRequest: (ctx) => {
+              onRequest: () => {
                 setLoading(true);
               },
-              onResponse: (ctx) => {
+              onResponse: () => {
                 setLoading(false);
               },
             }
@@ -60,7 +60,7 @@ export function SignInButton() {
         }}
       >
         {loading ? <LoaderIcon className="animate-spin" /> : <Spotify />}
-        <span>Login with Spotify</span>
+        <span>Sign In with Spotify</span>
       </Button>
     )
   );
