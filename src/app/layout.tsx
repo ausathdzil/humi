@@ -45,7 +45,7 @@ export default function RootLayout({
 
 function Footer() {
   return (
-    <footer className="px-16 py-8 flex items-start justify-between bg-primary text-primary-foreground">
+    <footer className="px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 bg-primary text-primary-foreground">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>
@@ -149,9 +149,9 @@ function Footer() {
           <li>
             <a
               className="hover:text-primary-foreground transition-colors"
-              href="mailto:mail@humi.ausathikram.com"
+              href="mailto:mail@ausathikram.com"
             >
-              mail@humi.ausathikram.com
+              mail@ausathikram.com
             </a>
           </li>
         </ul>

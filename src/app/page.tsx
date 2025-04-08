@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  AudioWaveformIcon,
   ChevronRightIcon,
   MicVocalIcon,
   Music4Icon,
@@ -24,17 +25,17 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="grow flex flex-col pb-16">
-      <div className="px-16 pt-16 pb-32 flex items-center justify-center gap-16">
-        <div className="max-w-1/2 flex flex-col gap-8">
+    <main className="grow flex flex-col pb-8 sm:pb-16">
+      <div className="px-4 sm:px-8 md:px-16 pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-24 md:pb-32 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+        <div className="w-full md:max-w-1/2 flex flex-col gap-6 md:gap-8">
           <article className="space-y-4">
-            <h1 className="font-bold text-6xl">
+            <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl">
               Turn Your Music Into{" "}
               <span className="font-serif font-semibold bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                 Visual Emotions
               </span>
             </h1>
-            <p className="font-semibold text-2xl">
+            <p className="font-semibold text-xl sm:text-2xl">
               Humi creates{" "}
               <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                 beautiful moodboards
@@ -43,7 +44,7 @@ export default function Home() {
               behind the music you love.
             </p>
           </article>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col lg:flex-row items-center md:items-start gap-4">
             <Button asChild className="w-fit" size="lg">
               <Link href="/visualize">
                 <Music4Icon />
@@ -53,17 +54,38 @@ export default function Home() {
             <SignInButton />
           </div>
         </div>
-        <Image
-          className="animate-spin"
-          src="/hero.svg"
-          alt="Hero"
-          width={300}
-          height={300}
-        />
+
+        <div className="relative w-[150px] h-[150px] lg:w-[300px] lg:h-[300px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg shadow-xl z-10">
+            <div className="absolute inset-0 bg-black/10 rounded-lg" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="size-20 sm:size-24 rounded-full bg-white/20 flex items-center justify-center">
+                <AudioWaveformIcon className="text-white sm:hidden" size={48} />
+                <AudioWaveformIcon
+                  className="text-white hidden sm:block"
+                  size={64}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute left-1/2 w-[150px] h-[150px] lg:w-[300px] lg:h-[300px] -translate-x-1/4 z-0">
+            <div className="absolute inset-0 rounded-full overflow-hidden animate-spin-slow shadow-xl">
+              <Image
+                src="/hero.svg"
+                alt="Vinyl Record"
+                width={300}
+                height={300}
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-full border-4 border-black/20" />
+          </div>
+        </div>
       </div>
 
-      <div className="p-16 border-y flex items-start justify-center gap-16">
-        <div className="p-8 space-y-4">
+      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y grid lg:grid-cols-3 gap-8 lg:gap-16">
+        <div className="py-4 sm:py-8 space-y-4">
           <Music4Icon
             className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-2 rounded-lg shadow-lg"
             size={36}
@@ -76,7 +98,7 @@ export default function Home() {
             </p>
           </article>
         </div>
-        <div className="p-8 space-y-4">
+        <div className="py-4 sm:py-8 space-y-4">
           <SwatchBookIcon
             className="bg-gradient-to-br from-blue-500 to-blue-600 text-primary-foreground p-2 rounded-lg shadow-lg"
             size={36}
@@ -89,7 +111,7 @@ export default function Home() {
             </p>
           </article>
         </div>
-        <div className="p-8 space-y-4">
+        <div className="py-4 sm:py-8 space-y-4">
           <MicVocalIcon
             className="bg-gradient-to-br from-cyan-500 to-cyan-600 text-primary-foreground p-2 rounded-lg shadow-lg"
             size={36}
@@ -104,8 +126,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="p-16 flex flex-col items-center justify-center gap-8">
-        <h2 className="font-bold text-2xl text-center w-1/2">
+      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
+        <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
           Select a song from your recently played tracks, top songs, or paste a
           Spotify link. Humi will analyze a song and generate a{" "}
           <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
@@ -128,11 +150,11 @@ export default function Home() {
         </Dialog>
       </div>
 
-      <div className="p-16 border-y flex flex-col items-center justify-center gap-8">
-        <h2 className="font-bold text-4xl text-center">
+      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">
+        <h2 className="font-bold text-3xl sm:text-4xl text-center">
           Frequently Asked Questions
         </h2>
-        <Accordion className="w-1/2" type="single" collapsible>
+        <Accordion className="w-4/5 lg:w-1/2" type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger>How does Humi work?</AccordionTrigger>
             <AccordionContent>
@@ -183,6 +205,20 @@ export default function Home() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+      </div>
+
+      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-4">
+        <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-center">
+          Try Humi for Free
+        </h2>
+        <p className="font-semibold text-lg sm:text-xl text-center">
+          Join us and create your own{" "}
+          <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
+            moodboards
+          </span>{" "}
+          today.
+        </p>
+        <SignInButton />
       </div>
     </main>
   );
