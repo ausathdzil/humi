@@ -3,9 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { authClient, signIn, signOut } from "@/lib/auth-client";
 import { LoaderIcon, LogOutIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { SVGProps, useState } from "react";
 
 export function AuthButton() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { data: session } = authClient.useSession();
 
@@ -18,7 +20,13 @@ export function AuthButton() {
           variant="destructive"
           onClick={async () => {
             setLoading(true);
-            await signOut();
+            await signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  router.push("/");
+                },
+              },
+            });
             setLoading(false);
           }}
         >
@@ -44,7 +52,7 @@ export function SignInButton() {
         await signIn.social(
           {
             provider: "spotify",
-            callbackURL: "/",
+            callbackURL: "/profile",
           },
           {
             onRequest: () => {
