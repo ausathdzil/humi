@@ -34,35 +34,32 @@ export function AuthButton() {
 
 export function SignInButton() {
   const [loading, setLoading] = useState(false);
-  const { data: session } = authClient.useSession();
 
   return (
-    !session && (
-      <Button
-        className="bg-green-500 hover:bg-green-500/90"
-        size="lg"
-        disabled={loading}
-        onClick={async () => {
-          await signIn.social(
-            {
-              provider: "spotify",
-              callbackURL: "/",
+    <Button
+      className="bg-green-500 hover:bg-green-500/90"
+      size="lg"
+      disabled={loading}
+      onClick={async () => {
+        await signIn.social(
+          {
+            provider: "spotify",
+            callbackURL: "/",
+          },
+          {
+            onRequest: () => {
+              setLoading(true);
             },
-            {
-              onRequest: () => {
-                setLoading(true);
-              },
-              onResponse: () => {
-                setLoading(false);
-              },
-            }
-          );
-        }}
-      >
-        {loading ? <LoaderIcon className="animate-spin" /> : <Spotify />}
-        <span>Sign In with Spotify</span>
-      </Button>
-    )
+            onResponse: () => {
+              setLoading(false);
+            },
+          }
+        );
+      }}
+    >
+      {loading ? <LoaderIcon className="animate-spin" /> : <Spotify />}
+      <span>Sign In with Spotify</span>
+    </Button>
   );
 }
 

@@ -1,4 +1,5 @@
 import { SignInButton } from "@/components/auth-button";
+import MoodboardExample from "@/components/moodboard-example";
 import {
   Accordion,
   AccordionContent,
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <main className="grow flex flex-col pb-8 sm:pb-16">
       <div className="px-4 sm:px-8 md:px-16 pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-24 md:pb-32 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-        <div className="w-full md:max-w-1/2 flex flex-col gap-6 md:gap-8">
+        <div className="w-full md:max-w-1/2 flex flex-col gap-8">
           <article className="space-y-4">
             <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl">
               Turn Your Music Into{" "}
@@ -44,7 +45,7 @@ export default function Home() {
               behind the music you love.
             </p>
           </article>
-          <div className="flex flex-col lg:flex-row items-center md:items-start gap-4">
+          <div className="flex flex-col lg:flex-row items-start gap-4">
             <Button asChild className="w-fit" size="lg">
               <Link href="/visualize">
                 <Music4Icon />
@@ -144,8 +145,11 @@ export default function Home() {
           </DialogTrigger>
           <DialogContent className="bg-gradient-to-r from-cyan-50 to-pink-50 via-blue-50 border-none">
             <DialogHeader>
-              <DialogTitle></DialogTitle>
+              <DialogTitle className="sr-only">
+                Humi Moodboard Example
+              </DialogTitle>
             </DialogHeader>
+            <MoodboardExample />
           </DialogContent>
         </Dialog>
       </div>
@@ -154,7 +158,7 @@ export default function Home() {
         <h2 className="font-bold text-3xl sm:text-4xl text-center">
           Frequently Asked Questions
         </h2>
-        <Accordion className="w-4/5 lg:w-1/2" type="single" collapsible>
+        <Accordion className="w-full lg:w-1/2" type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger>How does Humi work?</AccordionTrigger>
             <AccordionContent>
