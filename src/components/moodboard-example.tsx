@@ -30,7 +30,7 @@ export default function MoodboardExample() {
         </div>
 
         <p className="font-serif text-xl bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text font-semibold">
-          In the midnight hour, we dance like no one's watching
+          In the midnight hour, we dance like no one&apos;s watching
         </p>
 
         <div className="space-y-2">

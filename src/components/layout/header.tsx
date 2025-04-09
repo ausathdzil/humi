@@ -19,8 +19,8 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 px-4 sm:px-8 md:px-16 py-4 sm:py-6 md:py-8 transition-all duration-200 ${
-        isScrolled ? "bg-background/80 backdrop-blur-md border-b" : ""
+      className={`sticky top-0 z-50 px-4 sm:px-8 md:px-16 py-4 transition-all border-b ${
+        isScrolled ? "bg-background/80 backdrop-blur-md" : ""
       }`}
     >
       <nav className="flex items-center justify-between">
@@ -30,14 +30,8 @@ export function Header() {
               className="hover:text-primary transition-colors flex items-center gap-2 font-bold text-xl sm:text-2xl"
               href="/"
             >
-              <Image
-                src="/humi.svg"
-                alt="Humi"
-                width={28}
-                height={28}
-                className="size-6 sm:size-8"
-              />
-              <span>Humi</span>
+              <Image src="/humi.svg" alt="Humi Logo" width={28} height={28} />
+              <span className="hidden sm:block">Humi</span>
             </Link>
           </li>
         </ul>
