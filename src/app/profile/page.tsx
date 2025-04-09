@@ -28,6 +28,7 @@ async function ProfileContent() {
     <div className="flex flex-col gap-4 items-center justify-center">
       <h2 className="text-xl font-bold">{session?.user?.name}</h2>
       <ul className="space-y-4 list-disc">
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {topTracks.items.map((track: any) => (
           <li key={track.id}>
             <h1 className="text-lg font-bold">{track.name}</h1>
