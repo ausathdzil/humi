@@ -42,12 +42,13 @@ export function AuthButton() {
 
 export function SignInButton() {
   const [loading, setLoading] = useState(false);
+  const { data: session } = authClient.useSession();
 
   return (
     <Button
       className="bg-green-500 hover:bg-green-500/90"
       size="lg"
-      disabled={loading}
+      disabled={loading || !!session}
       onClick={async () => {
         await signIn.social(
           {
