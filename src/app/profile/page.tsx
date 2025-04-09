@@ -1,3 +1,4 @@
+import { getAccount } from "@/db/data";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { Suspense } from "react";
@@ -20,5 +21,34 @@ async function ProfileContent() {
     headers: await headers(),
   });
 
-  return <pre>{JSON.stringify(session, null, 2)}</pre>;
+  const account = await getAccount();
+  const topTracks = await getTopTracks(account.accessToken as string);
+
+  return (
+    <div className="flex flex-col gap-4 items-center justify-center">
+      <h2 className="text-xl font-bold">{session?.user?.name}</h2>
+      <ul className="space-y-4 list-disc">
+        {topTracks.items.map((track: any) => (
+          <li key={track.id}>
+            <h1 className="text-lg font-bold">{track.name}</h1>
+            <p className="text-sm text-muted-foreground">
+              {track.artists[0].name}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+async function getTopTracks(accessToken: string) {
+  const res = await fetch("https://api.spotify.com/v1/me/top/tracks", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
 }
