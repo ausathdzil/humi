@@ -1,13 +1,17 @@
-import { UserTopTracksSkeleton } from '@/components/skeletons';
+import {
+  TopTracksSkeleton,
+  RecentlyPlayedSkeleton,
+} from '@/components/skeletons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
+import { getAccessToken } from '@/db/data';
 import { getSession } from '@/lib/auth';
-import { getAccessToken } from '@/lib/token';
-import { getTopTracks, getRecentlyPlayed } from '@/lib/spotify';
+import { signOut } from '@/lib/auth-client';
+import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
 import { SimplifiedArtist, Track } from '@/lib/spotify.types';
-import { Session, User } from 'better-auth';
+import { User } from 'better-auth';
 import Image from 'next/image';
-import { unauthorized } from 'next/navigation';
+import { redirect, unauthorized } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Profile() {
@@ -17,19 +21,27 @@ export default async function Profile() {
     unauthorized();
   }
 
+  const accessToken = await getAccessToken(session.session.userId);
+  const isExpired = accessToken.accessTokenExpiresAt < new Date();
+
+  if (isExpired) {
+    await signOut();
+    redirect('/');
+  }
+
   return (
     <main className="grow bg-background">
       <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-8">
         <h1 className="text-2xl font-bold">Profile</h1>
-        <div className="flex flex-col gap-8 items-center justify-center w-full">
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
           <ProfileInfo user={session.user} />
           <h2 className="text-lg text-center font-bold">Recently Played</h2>
-          <Suspense fallback={<div>Loading...</div>}>
-            <RecentlyPlayed session={session.session} />
+          <Suspense fallback={<RecentlyPlayedSkeleton />}>
+            <RecentlyPlayed accessToken={accessToken.accessToken} />
           </Suspense>
           <h2 className="text-lg text-center font-bold">Top Tracks</h2>
-          <Suspense fallback={<UserTopTracksSkeleton />}>
-            <UserTopTracks session={session.session} />
+          <Suspense fallback={<TopTracksSkeleton />}>
+            <TopTracks accessToken={accessToken.accessToken} />
           </Suspense>
         </div>
       </div>
@@ -51,12 +63,48 @@ function ProfileInfo({ user }: { user: User }) {
   );
 }
 
-async function UserTopTracks({ session }: { session: Session }) {
-  const accessToken = await getAccessToken(session.userId);
+async function RecentlyPlayed({ accessToken }: { accessToken: string }) {
+  const recentlyPlayed = await getRecentlyPlayed(accessToken);
+
+  return (
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {recentlyPlayed.items.map((item) => (
+        <Card
+          key={item.track.id}
+          className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none"
+        >
+          <CardContent>
+            <div className="flex flex-col gap-2">
+              <div className="relative aspect-square rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
+                <Image
+                  src={item.track.album.images[0].url}
+                  alt={item.track.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">
+                  {item.track.name}
+                </h3>
+                <p className="font-semibold text-muted-foreground line-clamp-1">
+                  {item.track.artists.map((artist) => artist.name).join(', ')}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+async function TopTracks({ accessToken }: { accessToken: string }) {
   const topTracks = await getTopTracks(accessToken);
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {topTracks.items.map((track: Track) => (
         <Card
           key={track.id}
@@ -74,51 +122,13 @@ async function UserTopTracks({ session }: { session: Session }) {
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">
-                <h4 className="font-bold lg:text-xl line-clamp-1 group-hover:text-primary transition-colors">
+                <h3 className="font-bold lg:text-xl line-clamp-1 group-hover:text-primary transition-colors">
                   {track.name}
-                </h4>
+                </h3>
                 <p className="font-semibold text-sm lg:text-base text-muted-foreground line-clamp-1">
                   {track.artists
                     .map((artist: SimplifiedArtist) => artist.name)
                     .join(', ')}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-async function RecentlyPlayed({ session }: { session: Session }) {
-  const accessToken = await getAccessToken(session.userId);
-  const recentlyPlayed = await getRecentlyPlayed(accessToken);
-
-  return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {recentlyPlayed.items.map((item) => (
-        <Card
-          key={item.track.id}
-          className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none"
-        >
-          <CardContent>
-            <div className="flex gap-4">
-              <div className="relative size-16 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
-                <Image
-                  src={item.track.album.images[0].url}
-                  alt={item.track.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center min-w-0">
-                <h4 className="font-bold lg:text-xl line-clamp-1 group-hover:text-primary transition-colors">
-                  {item.track.name}
-                </h4>
-                <p className="font-semibold text-sm lg:text-base text-muted-foreground line-clamp-1">
-                  {item.track.artists.map((artist) => artist.name).join(', ')}
                 </p>
               </div>
             </div>
