@@ -2,7 +2,6 @@ import { Header } from "@/components/layout/header";
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import localFont from "next/font/local";
-import { unstable_ViewTransition as ViewTransition } from "react";
 import "./globals.css";
 
 const pretendard = localFont({
@@ -38,7 +37,7 @@ export default function RootLayout({
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
         <Header />
-        <ViewTransition name="slide">{children}</ViewTransition>
+        {children}
       </body>
     </html>
   );

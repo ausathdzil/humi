@@ -56,3 +56,4 @@ export const verification = pgTable('verification', {
 });
 
 export type User = typeof user.$inferSelect;
+export type Account = typeof account.$inferSelect;

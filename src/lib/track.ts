@@ -1,0 +1,19 @@
+import { TopTracksResponse } from './track.types';
+
+export async function getTopTracks(accessToken: string): Promise<TopTracksResponse> {
+  'use cache';
+
+  const res = await fetch("https://api.spotify.com/v1/me/top/tracks", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch top tracks");
+  }
+
+  const data = await res.json();
+  
+  return data;
+}

@@ -2,6 +2,7 @@ import { db } from '@/db';
 import * as schema from '@/db/schema';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { headers } from 'next/headers';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -18,7 +19,15 @@ export const auth = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
-      maxAge: 3600, // 1 hour
+      maxAge: 5 * 60, // 5 minutes
     },
   },
 });
+
+export async function getSession() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  return session;
+}

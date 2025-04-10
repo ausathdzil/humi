@@ -133,37 +133,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-@supports (view-transition-name: none) {
-  @media not (prefers-reduced-motion: reduce) {
-    ::view-transition-old(slide) {
-      animation: fade-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-
-    ::view-transition-new(slide) {
-      animation: slide-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-  }
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  to {
-    opacity: 0.5;
-    filter: brightness(0.7);
-  }
-}

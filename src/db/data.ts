@@ -1,19 +1,15 @@
-import { auth } from "@/lib/auth";
+import { db } from "@/db";
+import { Account, account } from "@/db/schema";
+import { Session } from "better-auth";
 import { eq } from "drizzle-orm";
-import { headers } from "next/headers";
-import { cache } from "react";
-import { db } from ".";
-import { account } from "./schema";
 
-export const getAccount = cache(async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
+export async function getAccount(session: Session): Promise<Account> {
+  'use cache';
+  
   const data = await db
     .select()
     .from(account)
-    .where(eq(account.userId, session?.user.id as string));
+    .where(eq(account.userId, session?.userId as string));
 
   return data[0];
-});
+}
