@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     dynamicIO: true,
     ppr: true,
   },
+  images: {
+    remotePatterns: [new URL('https://i.scdn.co/**')],
+  },
 };
 
 export default nextConfig;

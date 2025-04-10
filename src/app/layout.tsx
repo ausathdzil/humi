@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/header";
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import localFont from "next/font/local";
+import { Suspense } from "react";
 import "./globals.css";
 
 const pretendard = localFont({
@@ -37,7 +38,7 @@ export default function RootLayout({
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
         <Header />
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
       </body>
     </html>
   );
