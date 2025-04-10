@@ -54,6 +54,7 @@ export function SignInButton() {
           {
             provider: "spotify",
             callbackURL: "/profile",
+            errorCallbackURL: "/error",
           },
           {
             onRequest: () => {

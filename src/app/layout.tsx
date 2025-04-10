@@ -38,7 +38,7 @@ export default function RootLayout({
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
         <Header />
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        <Suspense fallback={null}>{children}</Suspense>
       </body>
     </html>
   );
