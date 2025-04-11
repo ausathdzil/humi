@@ -3,6 +3,7 @@ import * as schema from '@/db/schema';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { headers } from 'next/headers';
+import { cache } from 'react';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -17,17 +18,23 @@ export const auth = betterAuth({
     },
   },
   session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60, // 5 minutes
-    },
+    expiresIn: 3600, // 1 hour
   },
 });
 
-export async function getSession() {
+export const getSession = cache(async () => {
   const session = await auth.api.getSession({
+    query: {
+      disableCookieCache: true,
+    },
     headers: await headers(),
   });
 
   return session;
+});
+
+export async function signOut() {
+  await auth.api.signOut({
+    headers: await headers(),
+  });
 }

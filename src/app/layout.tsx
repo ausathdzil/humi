@@ -1,27 +1,28 @@
-import { Header } from "@/components/layout/header";
-import type { Metadata } from "next";
-import { Lora } from "next/font/google";
-import localFont from "next/font/local";
-import { Suspense } from "react";
-import "./globals.css";
+import { Header } from '@/components/layout/header';
+import { Loader } from 'lucide-react';
+import type { Metadata } from 'next';
+import { Lora } from 'next/font/google';
+import localFont from 'next/font/local';
+import { Suspense } from 'react';
+import './globals.css';
 
 const pretendard = localFont({
-  src: "./fonts/PretendardVariable.woff2",
-  display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
+  src: './fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
 });
 
 const lora = Lora({
-  subsets: ["latin"],
-  display: "swap",
-  style: ["italic"],
-  variable: "--font-lora",
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['italic'],
+  variable: '--font-lora',
 });
 
 export const metadata: Metadata = {
-  title: "Humi",
-  description: "Visualize your music",
+  title: 'Humi',
+  description: 'Visualize your music',
 };
 
 export const experimental_ppr = true;
@@ -38,8 +39,16 @@ export default function RootLayout({
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
         <Header />
-        <Suspense fallback={null}>{children}</Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </body>
     </html>
+  );
+}
+
+function Loading() {
+  return (
+    <main className="grow bg-background flex items-center justify-center">
+      <Loader className="animate-spin" />
+    </main>
   );
 }

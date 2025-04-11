@@ -24,7 +24,7 @@ export async function getRecentlyPlayed(
 ): Promise<RecentlyPlayedResponse> {
   'use cache';
 
-  cacheLife('hours');
+  cacheLife('minutes');
 
   const res = await fetch(
     'https://api.spotify.com/v1/me/player/recently-played?limit=5',

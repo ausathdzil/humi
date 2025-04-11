@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { authClient, signIn, signOut } from "@/lib/auth-client";
-import { LoaderIcon, LogOutIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { SVGProps, useState } from "react";
+import { Button } from '@/components/ui/button';
+import { signIn, signOut, useSession } from '@/lib/auth-client';
+import { LoaderIcon, LogOutIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { SVGProps, useState } from 'react';
 
 export function AuthButton() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { data: session } = authClient.useSession();
+
+  const router = useRouter();
+  const session = useSession();
 
   return (
     <>
-      {session ? (
+      {session.data?.user ? (
         <Button
           size="lg"
           disabled={loading}
@@ -23,7 +24,7 @@ export function AuthButton() {
             await signOut({
               fetchOptions: {
                 onSuccess: () => {
-                  router.push("/");
+                  router.push('/');
                 },
               },
             });
@@ -31,7 +32,7 @@ export function AuthButton() {
           }}
         >
           {loading ? <LoaderIcon className="animate-spin" /> : <LogOutIcon />}
-          <span>Logout</span>
+          Logout
         </Button>
       ) : (
         <SignInButton />
@@ -42,19 +43,20 @@ export function AuthButton() {
 
 export function SignInButton() {
   const [loading, setLoading] = useState(false);
-  const { data: session } = authClient.useSession();
+
+  const session = useSession();
 
   return (
     <Button
       className="bg-green-500 hover:bg-green-500/90"
       size="lg"
-      disabled={loading || !!session}
+      disabled={loading || !!session.data?.user}
       onClick={async () => {
         await signIn.social(
           {
-            provider: "spotify",
-            callbackURL: "/profile",
-            errorCallbackURL: "/error",
+            provider: 'spotify',
+            callbackURL: '/profile',
+            errorCallbackURL: '/error',
           },
           {
             onRequest: () => {
@@ -68,7 +70,7 @@ export function SignInButton() {
       }}
     >
       {loading ? <LoaderIcon className="animate-spin" /> : <Spotify />}
-      <span>Sign In with Spotify</span>
+      Sign In with Spotify
     </Button>
   );
 }

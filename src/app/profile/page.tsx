@@ -1,12 +1,11 @@
 import {
-  TopTracksSkeleton,
   RecentlyPlayedSkeleton,
+  TopTracksSkeleton,
 } from '@/components/skeletons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { getAccessToken } from '@/db/data';
-import { getSession } from '@/lib/auth';
-import { signOut } from '@/lib/auth-client';
+import { getAccessToken, getUser } from '@/db/data';
+import { signOut } from '@/lib/auth';
 import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
 import { SimplifiedArtist, Track } from '@/lib/spotify.types';
 import { User } from 'better-auth';
@@ -15,13 +14,13 @@ import { redirect, unauthorized } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Profile() {
-  const session = await getSession();
+  const user = await getUser();
 
-  if (!session) {
+  if (!user) {
     unauthorized();
   }
 
-  const accessToken = await getAccessToken(session.session.userId);
+  const accessToken = await getAccessToken(user.id);
   const isExpired = accessToken.accessTokenExpiresAt < new Date();
 
   if (isExpired) {
@@ -34,7 +33,7 @@ export default async function Profile() {
       <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-8">
         <h1 className="text-2xl font-bold">Profile</h1>
         <div className="flex flex-col gap-4 items-center justify-center w-full">
-          <ProfileInfo user={session.user} />
+          <ProfileInfo user={user} />
           <h2 className="text-lg text-center font-bold">Recently Played</h2>
           <Suspense fallback={<RecentlyPlayedSkeleton />}>
             <RecentlyPlayed accessToken={accessToken.accessToken} />

@@ -1,18 +1,20 @@
 import { db } from '@/db';
-import { Account, account } from '@/db/schema';
-import { Session } from 'better-auth';
+import { account, user } from '@/db/schema';
+import { getSession } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
+import { cache } from 'react';
 
-export async function getAccount(session: Session): Promise<Account> {
-  'use cache';
+export const getUser = cache(async () => {
+  const session = await getSession();
 
-  const data = await db
-    .select()
-    .from(account)
-    .where(eq(account.userId, session?.userId as string));
+  if (!session) {
+    return null;
+  }
+
+  const data = await db.select().from(user).where(eq(user.id, session.user.id));
 
   return data[0];
-}
+});
 
 export async function getAccessToken(userId: string) {
   const user = await db

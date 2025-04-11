@@ -1,27 +1,27 @@
-import { SignInButton } from "@/components/auth-button";
-import MoodboardExample from "@/components/moodboard-example";
+import { SignInButton } from '@/components/auth/auth-button';
+import MoodboardExample from '@/components/moodboard-example';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   AudioWaveformIcon,
   MicVocalIcon,
   Music4Icon,
   SwatchBookIcon,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -31,16 +31,16 @@ export default function Home() {
           <div className="w-full md:max-w-1/2 flex flex-col gap-8">
             <article className="space-y-4">
               <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl">
-                Turn Your Music Into{" "}
+                Turn Your Music Into{' '}
                 <span className="font-serif font-semibold bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                   Visual Emotions
                 </span>
               </h1>
               <p className="font-semibold text-xl sm:text-2xl">
-                Humi creates{" "}
+                Humi creates{' '}
                 <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                   beautiful moodboards
-                </span>{" "}
+                </span>{' '}
                 from your favorite songs, visualizing the emotions and energy
                 behind the music you love.
               </p>
@@ -49,7 +49,7 @@ export default function Home() {
               <Button asChild className="w-fit" size="lg">
                 <Link href="/visualize">
                   <Music4Icon />
-                  <span>Visualize Your Music</span>
+                  Visualize Your Music
                 </Link>
               </Button>
               <SignInButton />
@@ -133,10 +133,10 @@ export default function Home() {
         <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
           <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
             Select a song from your recently played tracks, top songs, or paste
-            a Spotify link. Humi will analyze a song and generate a{" "}
+            a Spotify link. Humi will analyze a song and generate a{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
               beautiful, shareable moodboard
-            </span>{" "}
+            </span>{' '}
             in seconds.
           </h2>
           <Dialog>
@@ -222,10 +222,10 @@ export default function Home() {
             Try Humi for Free
           </h2>
           <p className="font-semibold text-lg sm:text-xl text-center">
-            Join us and create your own{" "}
+            Join us and create your own{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
               moodboards
-            </span>{" "}
+            </span>{' '}
             today.
           </p>
           <SignInButton />

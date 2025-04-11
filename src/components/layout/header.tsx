@@ -1,31 +1,30 @@
-"use client";
+'use client';
 
-import { AuthButton } from "@/components/auth-button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { AuthButton } from '@/components/auth/auth-button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useSession } from '@/lib/auth-client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { data: session } = authClient.useSession();
 
-  const user = session?.user;
+  const session = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <header
       className={`sticky top-0 z-50 px-4 sm:px-8 md:px-16 py-4 transition-all border-b ${
-        isScrolled ? "bg-background/80 backdrop-blur-md" : ""
+        isScrolled ? 'bg-background/80 backdrop-blur-md' : ''
       }`}
     >
       <nav className="flex items-center justify-between">
@@ -41,11 +40,13 @@ export function Header() {
           </li>
         </ul>
         <div className="flex items-center gap-4">
-          {user && (
+          {session.data?.user && (
             <Link className="group" href="/profile">
               <Avatar className="size-10 hover:border-2 hover:ring-2 hover:ring-primary/50 transition-all">
-                <AvatarImage src={user.image ?? undefined} />
-                <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                <AvatarImage src={session.data.user.image ?? undefined} />
+                <AvatarFallback>
+                  {session.data.user.name?.charAt(0)}
+                </AvatarFallback>
               </Avatar>
             </Link>
           )}
