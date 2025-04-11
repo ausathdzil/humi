@@ -1,4 +1,4 @@
-import { SignInButton } from '@/components/auth/auth-button';
+import { SignInButton } from '@/components/auth-button';
 
 export default function UnauthorizedPage() {
   return (

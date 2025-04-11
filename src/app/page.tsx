@@ -1,4 +1,4 @@
-import { SignInButton } from '@/components/auth/auth-button';
+import { SignInButton } from '@/components/auth-button';
 import MoodboardExample from '@/components/moodboard-example';
 import {
   Accordion,

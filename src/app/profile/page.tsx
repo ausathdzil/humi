@@ -1,3 +1,4 @@
+import { SignOutButton } from '@/components/auth-button';
 import {
   RecentlyPlayedSkeleton,
   TopTracksSkeleton,
@@ -5,12 +6,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { getAccessToken, getUser } from '@/db/data';
-import { signOut } from '@/lib/auth';
 import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
 import { SimplifiedArtist, Track } from '@/lib/spotify.types';
 import { User } from 'better-auth';
 import Image from 'next/image';
-import { redirect, unauthorized } from 'next/navigation';
+import { unauthorized } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Profile() {
@@ -21,26 +21,24 @@ export default async function Profile() {
   }
 
   const accessToken = await getAccessToken(user.id);
-  const isExpired = accessToken.accessTokenExpiresAt < new Date();
-
-  if (isExpired) {
-    await signOut();
-    redirect('/');
-  }
 
   return (
     <main className="grow bg-background">
-      <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-8">
-        <h1 className="text-2xl font-bold">Profile</h1>
+      <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-16">
         <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <h1 className="text-2xl font-bold">Profile</h1>
           <ProfileInfo user={user} />
-          <h2 className="text-lg text-center font-bold">Recently Played</h2>
+        </div>
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <h2 className="text-xl text-center font-bold">Recently Played</h2>
           <Suspense fallback={<RecentlyPlayedSkeleton />}>
-            <RecentlyPlayed accessToken={accessToken.accessToken} />
+            <RecentlyPlayed accessToken={accessToken} />
           </Suspense>
-          <h2 className="text-lg text-center font-bold">Top Tracks</h2>
+        </div>
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <h2 className="text-xl text-center font-bold">Top Tracks</h2>
           <Suspense fallback={<TopTracksSkeleton />}>
-            <TopTracks accessToken={accessToken.accessToken} />
+            <TopTracks accessToken={accessToken} />
           </Suspense>
         </div>
       </div>
@@ -50,13 +48,22 @@ export default async function Profile() {
 
 function ProfileInfo({ user }: { user: User }) {
   return (
-    <div className="flex flex-col items-center gap-4">
-      <Avatar className="size-24">
-        <AvatarImage src={user.image ?? undefined} />
-        <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div className="text-center">
-        <h2 className="text-xl font-bold">{user.name}</h2>
+    <div className="flex flex-col items-start gap-6">
+      <div className="flex items-center gap-4">
+        <Avatar className="size-16">
+          <AvatarImage src={user.image ?? undefined} />
+          <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <div>
+          <h2 className="text-xl font-bold">{user.name}</h2>
+          <p className="font-semibold text-muted-foreground">{user.email}</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4">
+        {/* <Button variant="secondary" size="lg" asChild>
+          <Link href="/settings">Edit Profile</Link>
+        </Button> */}
+        <SignOutButton />
       </div>
     </div>
   );
@@ -66,7 +73,7 @@ async function RecentlyPlayed({ accessToken }: { accessToken: string }) {
   const recentlyPlayed = await getRecentlyPlayed(accessToken);
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {recentlyPlayed.items.map((item) => (
         <Card
           key={item.track.id}
@@ -81,6 +88,7 @@ async function RecentlyPlayed({ accessToken }: { accessToken: string }) {
                   alt={item.track.name}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 />
               </div>
               <div>
@@ -118,6 +126,7 @@ async function TopTracks({ accessToken }: { accessToken: string }) {
                   alt={track.name}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">

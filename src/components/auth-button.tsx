@@ -3,54 +3,65 @@
 import { Button } from '@/components/ui/button';
 import { signIn, signOut, useSession } from '@/lib/auth-client';
 import { LoaderIcon, LogOutIcon } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SVGProps, useState } from 'react';
 
 export function AuthButton() {
+  const session = useSession();
+
+  return session.data ? (
+    <div className="flex items-center gap-4">
+      <span className="hidden sm:block text-lg font-bold">
+        👋 Hey, {session.data.user.name}!
+      </span>
+      <Button variant="secondary" size="lg" asChild>
+        <Link href="/profile">Profile</Link>
+      </Button>
+    </div>
+  ) : (
+    <SignInButton />
+  );
+}
+
+export function SignOutButton() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const session = useSession();
 
   return (
-    <>
-      {session.data?.user ? (
-        <Button
-          size="lg"
-          disabled={loading}
-          variant="destructive"
-          onClick={async () => {
-            setLoading(true);
-            await signOut({
-              fetchOptions: {
-                onSuccess: () => {
-                  router.push('/');
-                },
-              },
-            });
-            setLoading(false);
-          }}
-        >
-          {loading ? <LoaderIcon className="animate-spin" /> : <LogOutIcon />}
-          Logout
-        </Button>
-      ) : (
-        <SignInButton />
-      )}
-    </>
+    <Button
+      size="lg"
+      disabled={loading}
+      variant="destructive"
+      onClick={async () => {
+        await signOut({
+          fetchOptions: {
+            onRequest: () => {
+              setLoading(true);
+            },
+            onSuccess: () => {
+              router.push('/');
+              setLoading(false);
+            },
+          },
+        });
+      }}
+    >
+      {loading ? <LoaderIcon className="animate-spin" /> : <LogOutIcon />}
+      Sign Out
+    </Button>
   );
 }
 
 export function SignInButton() {
   const [loading, setLoading] = useState(false);
 
-  const session = useSession();
-
   return (
     <Button
       className="bg-green-500 hover:bg-green-500/90"
       size="lg"
-      disabled={loading || !!session.data?.user}
+      disabled={loading}
       onClick={async () => {
         await signIn.social(
           {
