@@ -1,6 +1,6 @@
 'use client';
 
-import { LoaderIcon, Share2Icon, ShareIcon, XIcon } from 'lucide-react';
+import { LoaderIcon, ShareIcon, XIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -16,7 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
-export default function MorphButton() {
+export default function TryHumiButton() {
   const [isInput, setIsInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [submittedValue, setSubmittedValue] = useState('');
@@ -74,9 +74,9 @@ export default function MorphButton() {
           onSubmit={handleInputSubmit}
         >
           <motion.div
-            className="relative"
+            className="relative max-w-[275px] md:max-w-[400px] lg:max-w-[475px]"
             initial={{ width: '220px' }}
-            animate={{ width: '500px' }}
+            animate={{ width: '475px' }}
             transition={{
               type: 'spring',
               stiffness: 500,
@@ -132,7 +132,7 @@ export default function MorphButton() {
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline">
-              <Share2Icon size={16} />
+              <ShareIcon size={16} />
               Share
             </Button>
             <Button onClick={() => setShowDialog(false)}>Close</Button>

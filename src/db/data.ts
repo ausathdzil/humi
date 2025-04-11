@@ -16,7 +16,7 @@ export const getUser = cache(async () => {
   return data[0];
 });
 
-export async function getAccessToken(userId: string) {
+export const getAccessToken = cache(async (userId: string) => {
   const user = await db
     .select({
       accessToken: account.accessToken,
@@ -74,4 +74,4 @@ export async function getAccessToken(userId: string) {
   }
 
   return user[0].accessToken;
-}
+});

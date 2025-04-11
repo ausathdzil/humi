@@ -1,6 +1,6 @@
 import { SignInButton } from '@/components/auth-button';
 import MoodboardExample from '@/components/moodboard-example';
-import MorphButton from '@/components/morph-button';
+import TryHumiButton from '@/components/try-humi-button';
 import {
   Accordion,
   AccordionContent,
@@ -91,7 +91,7 @@ export default function Home() {
             in seconds.
           </h2>
           <MoodboardExample />
-          <MorphButton />
+          <TryHumiButton />
         </div>
 
         <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-3 gap-8 lg:gap-16">

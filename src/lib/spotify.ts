@@ -1,5 +1,26 @@
 import { unstable_cacheLife as cacheLife } from 'next/cache';
-import { RecentlyPlayedResponse, TopTracksResponse } from './spotify.types';
+import {
+  RecentlyPlayedResponse,
+  TopTracksResponse,
+  Track,
+} from './spotify.types';
+
+export async function getTrack(
+  trackId: string,
+  accessToken: string
+): Promise<Track> {
+  const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch track');
+
+  const data = await res.json();
+
+  return data;
+}
 
 export async function getTopTracks(
   accessToken: string
@@ -13,6 +34,8 @@ export async function getTopTracks(
       Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  if (!res.ok) throw new Error('Failed to fetch top tracks');
 
   const data = await res.json();
 
@@ -34,6 +57,8 @@ export async function getRecentlyPlayed(
       },
     }
   );
+
+  if (!res.ok) throw new Error('Failed to fetch recently played');
 
   const data = await res.json();
 

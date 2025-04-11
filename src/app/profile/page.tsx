@@ -1,5 +1,6 @@
 import { SignOutButton } from '@/components/auth-button';
 import {
+  ProfileInfoSkeleton,
   RecentlyPlayedSkeleton,
   TopTracksSkeleton,
 } from '@/components/skeletons';
@@ -8,37 +9,30 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getAccessToken, getUser } from '@/db/data';
 import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
 import { SimplifiedArtist, Track } from '@/lib/spotify.types';
-import { User } from 'better-auth';
 import Image from 'next/image';
 import { unauthorized } from 'next/navigation';
 import { Suspense } from 'react';
 
-export default async function Profile() {
-  const user = await getUser();
-
-  if (!user) {
-    unauthorized();
-  }
-
-  const accessToken = await getAccessToken(user.id);
-
+export default function Profile() {
   return (
     <main className="grow bg-background">
       <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-16">
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <h1 className="text-2xl font-bold">Profile</h1>
-          <ProfileInfo user={user} />
+          <Suspense fallback={<ProfileInfoSkeleton />}>
+            <ProfileInfo />
+          </Suspense>
         </div>
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <h2 className="text-xl text-center font-bold">Recently Played</h2>
           <Suspense fallback={<RecentlyPlayedSkeleton />}>
-            <RecentlyPlayed accessToken={accessToken} />
+            <RecentlyPlayed />
           </Suspense>
         </div>
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <h2 className="text-xl text-center font-bold">Top Tracks</h2>
           <Suspense fallback={<TopTracksSkeleton />}>
-            <TopTracks accessToken={accessToken} />
+            <TopTracks />
           </Suspense>
         </div>
       </div>
@@ -46,7 +40,13 @@ export default async function Profile() {
   );
 }
 
-function ProfileInfo({ user }: { user: User }) {
+async function ProfileInfo() {
+  const user = await getUser();
+
+  if (!user) {
+    unauthorized();
+  }
+
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex items-center gap-4">
@@ -69,7 +69,14 @@ function ProfileInfo({ user }: { user: User }) {
   );
 }
 
-async function RecentlyPlayed({ accessToken }: { accessToken: string }) {
+async function RecentlyPlayed() {
+  const user = await getUser();
+
+  if (!user) {
+    unauthorized();
+  }
+
+  const accessToken = await getAccessToken(user.id);
   const recentlyPlayed = await getRecentlyPlayed(accessToken);
 
   return (
@@ -107,7 +114,14 @@ async function RecentlyPlayed({ accessToken }: { accessToken: string }) {
   );
 }
 
-async function TopTracks({ accessToken }: { accessToken: string }) {
+async function TopTracks() {
+  const user = await getUser();
+
+  if (!user) {
+    unauthorized();
+  }
+
+  const accessToken = await getAccessToken(user.id);
   const topTracks = await getTopTracks(accessToken);
 
   return (

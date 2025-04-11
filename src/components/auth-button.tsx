@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { signIn, signOut, useSession } from '@/lib/auth-client';
-import { LoaderIcon, LogOutIcon } from 'lucide-react';
+import { LoaderIcon, LogOutIcon, UserRoundIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SVGProps, useState } from 'react';
@@ -16,7 +16,10 @@ export function AuthButton() {
         👋 Hey, {session.data.user.name}!
       </span>
       <Button variant="secondary" size="lg" asChild>
-        <Link href="/profile">Profile</Link>
+        <Link href="/profile">
+          <UserRoundIcon />
+          Profile
+        </Link>
       </Button>
     </div>
   ) : (
