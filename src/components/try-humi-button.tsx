@@ -36,7 +36,7 @@ export default function TryHumiButton() {
             ref={inputRef}
             type="text"
             name="q"
-            className="h-10 px-10"
+            className="h-10 px-10 placeholder:text-xs md:placeholder:text-base"
             placeholder="Enter a Spotify track URL or ID..."
           />
 
