@@ -67,3 +67,33 @@ export function ProfileInfoSkeleton() {
     </div>
   );
 }
+
+export function TrackResultSkeleton() {
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <Card className="overflow-hidden bg-none border-none shadow-none w-full max-w-4xl">
+        <CardContent>
+          <div className="flex flex-col gap-6">
+            <div className="relative w-[200px] sm:w-[300px] aspect-square rounded-lg overflow-hidden ring-1 ring-border/50 mx-auto">
+              <Skeleton className="w-full h-full" />
+            </div>
+            <div className="flex flex-col gap-2 text-center">
+              <Skeleton className="h-8 w-3/4 mx-auto" />
+              <Skeleton className="h-6 w-1/2 mx-auto" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export function TrackSearchSkeleton() {
+  return (
+    <div className="w-full flex justify-center">
+      <div className="h-10 max-w-[500px] w-full">
+        <Skeleton className="w-full h-full rounded-full" />
+      </div>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@ import { extractSpotifyTrackId } from '@/lib/utils';
 import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
+import { TrackResultSkeleton } from '@/components/skeletons';
 
 interface CreateMoodboardProps {
   searchParams: Promise<{
@@ -66,7 +67,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   const track = await getTrack(trackId);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<TrackResultSkeleton />}>
       <div className="flex flex-col items-center gap-4">
         <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none w-full max-w-4xl">
           <CardContent>
