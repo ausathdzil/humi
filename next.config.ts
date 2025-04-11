@@ -7,7 +7,20 @@ const nextConfig: NextConfig = {
     ppr: true,
   },
   images: {
-    remotePatterns: [new URL('https://i.scdn.co/**')],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

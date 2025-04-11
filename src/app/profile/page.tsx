@@ -48,7 +48,7 @@ export default async function Profile() {
 
 function ProfileInfo({ user }: { user: User }) {
   return (
-    <div className="flex flex-col items-start gap-6">
+    <div className="flex flex-col items-center gap-6">
       <div className="flex items-center gap-4">
         <Avatar className="size-16">
           <AvatarImage src={user.image ?? undefined} />

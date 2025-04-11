@@ -1,5 +1,6 @@
 import { SignInButton } from '@/components/auth-button';
 import MoodboardExample from '@/components/moodboard-example';
+import MorphButton from '@/components/morph-button';
 import {
   Accordion,
   AccordionContent,
@@ -7,13 +8,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import {
   AudioWaveformIcon,
   MicVocalIcon,
@@ -88,7 +82,19 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y grid lg:grid-cols-3 gap-8 lg:gap-16">
+        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">
+          <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
+            Paste a Spotify link. Humi will analyze a song and generate a{' '}
+            <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
+              beautiful, shareable moodboard
+            </span>{' '}
+            in seconds.
+          </h2>
+          <MoodboardExample />
+          <MorphButton />
+        </div>
+
+        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-3 gap-8 lg:gap-16">
           <div className="py-4 sm:py-8 space-y-4">
             <Music4Icon
               className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-2 rounded-lg shadow-lg"
@@ -128,33 +134,6 @@ export default function Home() {
               </p>
             </article>
           </div>
-        </div>
-
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
-          <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
-            Select a song from your recently played tracks, top songs, or paste
-            a Spotify link. Humi will analyze a song and generate a{' '}
-            <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
-              beautiful, shareable moodboard
-            </span>{' '}
-            in seconds.
-          </h2>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button size="lg" variant="outline">
-                <Image src="/humi.svg" alt="Humi" width={16} height={16} />
-                <span>See Humi in Action</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-gradient-to-r from-cyan-50 to-pink-50 via-blue-50 border-none">
-              <DialogHeader>
-                <DialogTitle className="sr-only">
-                  Humi Moodboard Example
-                </DialogTitle>
-              </DialogHeader>
-              <MoodboardExample />
-            </DialogContent>
-          </Dialog>
         </div>
 
         <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">

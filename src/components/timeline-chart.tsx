@@ -4,17 +4,17 @@ import { ChartConfig, ChartContainer } from '@/components/ui/chart';
 import { Bar, BarChart, XAxis, Cell } from 'recharts';
 
 const chartData = [
-  { time: '00:00', value: 100, color: '#8b5cf6' },
-  { time: '00:30', value: 100, color: '#ec4899' },
-  { time: '01:00', value: 100, color: '#3b82f6' },
-  { time: '02:00', value: 100, color: '#6366f1' },
-  { time: '03:00', value: 100, color: '#8b5cf6' },
+  { time: '00:00', value: 100, color: '#FF69B4' },
+  { time: '00:30', value: 100, color: '#9370DB' },
+  { time: '01:00', value: 100, color: '#FFA07A' },
+  { time: '02:00', value: 100, color: '#FFD700' },
+  { time: '03:00', value: 100, color: '#9370DB' },
 ];
 
 const chartConfig = {
   value: {
     label: 'Value',
-    color: '#8b5cf6',
+    color: '#FF69B4',
   },
 } satisfies ChartConfig;
 
