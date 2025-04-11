@@ -41,7 +41,7 @@ export default function Home() {
             </article>
             <div className="flex flex-col lg:flex-row items-start gap-4">
               <Button asChild className="w-fit" size="lg">
-                <Link href="/visualize">
+                <Link href="/moodboard">
                   <Music4Icon />
                   Visualize Your Music
                 </Link>

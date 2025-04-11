@@ -5,21 +5,45 @@ import {
   Track,
 } from './spotify.types';
 
+async function getClientAccessToken(): Promise<string> {
+  const res = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization:
+        'Basic ' +
+        Buffer.from(
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+        ).toString('base64'),
+    },
+    body: new URLSearchParams({
+      grant_type: 'client_credentials',
+    }).toString(),
+  });
+
+  const data = await res.json();
+  return data.access_token;
+}
+
 export async function getTrack(
   trackId: string,
-  accessToken: string
+  accessToken?: string
 ): Promise<Track> {
+  'use cache';
+
+  cacheLife('hours');
+
+  const token = accessToken || (await getClientAccessToken());
+
   const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
   if (!res.ok) throw new Error('Failed to fetch track');
 
-  const data = await res.json();
-
-  return data;
+  return res.json();
 }
 
 export async function getTopTracks(
