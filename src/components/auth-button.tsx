@@ -11,8 +11,8 @@ export function AuthButton() {
   const session = useSession();
 
   return session.data ? (
-    <div className="flex items-center gap-4">
-      <span className="hidden sm:block text-lg font-bold">
+    <div className="flex items-center gap-2 sm:gap-4">
+      <span className="text-sm sm:text-lg font-bold">
         👋 Hey, {session.data.user.name}!
       </span>
       <Button variant="secondary" size="lg" asChild>

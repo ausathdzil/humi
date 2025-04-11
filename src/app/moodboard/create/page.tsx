@@ -18,20 +18,22 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
 
   if (!searchParams || !q) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 text-center min-h-[60vh]">
-        <Disc3 className="size-12 text-muted-foreground" />
-        <h1 className="text-3xl font-bold text-muted-foreground">
+      <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 text-center min-h-[60vh] px-4">
+        <Disc3 className="size-10 sm:size-16 text-muted-foreground" />
+        <h1 className="text-xl sm:text-3xl font-bold text-muted-foreground">
           Create a Moodboard
         </h1>
-        <p className="text-lg max-w-md font-semibold text-muted-foreground text-center">
+        <p className="text-sm sm:text-lg max-w-md font-semibold text-muted-foreground text-center">
           Enter a Spotify track URL or ID in the search bar above to create a
           moodboard.
           <br />
-          <code className="mt-2 block text-sm bg-muted p-2 rounded-md line-clamp-1">
+          <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
             https://open.spotify.com/track/2LlOeW5rVcvl3QcPNPcDus
           </code>
-          <span className="mt-1 block text-sm text-muted-foreground">or</span>
-          <code className="mt-1 block text-sm bg-muted p-2 rounded-md line-clamp-1">
+          <span className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm text-muted-foreground">
+            or
+          </span>
+          <code className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
             2LlOeW5rVcvl3QcPNPcDus
           </code>
         </p>
@@ -43,20 +45,22 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
 
   if (!trackId) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 text-center min-h-[60vh]">
-        <AlertCircle className="size-12 text-warning" />
-        <h1 className="text-3xl font-bold text-warning">
+      <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 text-center min-h-[60vh] px-4">
+        <AlertCircle className="size-10 sm:size-16 text-warning" />
+        <h1 className="text-xl sm:text-3xl font-bold text-warning">
           Invalid Spotify Track
         </h1>
-        <p className="text-lg font-semibold max-w-md text-muted-foreground text-center">
+        <p className="text-sm sm:text-lg font-semibold max-w-md text-muted-foreground text-center">
           Please provide a valid Spotify track URL or ID. The URL should look
           like:
           <br />
-          <code className="mt-2 block text-sm bg-muted p-2 rounded-md line-clamp-1">
+          <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
             https://open.spotify.com/track/2LlOeW5rVcvl3QcPNPcDus
           </code>
-          <span className="mt-1 block text-sm">or</span>
-          <code className="mt-1 block text-sm bg-muted p-2 rounded-md line-clamp-1">
+          <span className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm text-muted-foreground">
+            or
+          </span>
+          <code className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
             2LlOeW5rVcvl3QcPNPcDus
           </code>
         </p>
