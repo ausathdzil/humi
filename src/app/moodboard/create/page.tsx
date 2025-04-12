@@ -1,11 +1,10 @@
+import { TrackResultSkeleton } from '@/components/skeletons';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/spotify';
 import { extractSpotifyTrackId } from '@/lib/utils';
 import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import { TrackResultSkeleton } from '@/components/skeletons';
-import { unstable_ViewTransition as ViewTransition } from 'react';
 
 interface CreateMoodboardProps {
   searchParams: Promise<{
@@ -79,8 +78,8 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
           Track Not Found
         </h1>
         <p className="text-sm sm:text-lg font-semibold max-w-md text-muted-foreground text-center">
-          We couldn't find the track you're looking for. Please make sure the
-          Spotify track URL or ID is correct and try again.
+          We couldn&apos;t find the track you&apos;re looking for. Please make
+          sure the Spotify track URL or ID is correct and try again.
         </p>
       </div>
     );
