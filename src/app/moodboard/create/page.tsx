@@ -71,6 +71,21 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
 
   const track = await getTrack(trackId);
 
+  if (!track) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 text-center min-h-[60vh] px-4">
+        <AlertCircle className="size-10 sm:size-16 text-warning" />
+        <h1 className="text-xl sm:text-3xl font-bold text-warning">
+          Track Not Found
+        </h1>
+        <p className="text-sm sm:text-lg font-semibold max-w-md text-muted-foreground text-center">
+          We couldn't find the track you're looking for. Please make sure the
+          Spotify track URL or ID is correct and try again.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Suspense fallback={<TrackResultSkeleton />}>
       <div className="flex flex-col items-center gap-4">

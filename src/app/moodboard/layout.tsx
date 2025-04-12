@@ -13,7 +13,7 @@ export default function Moodboard({
         <Suspense fallback={<TrackSearchSkeleton />}>
           <TrackSearch />
         </Suspense>
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
       </div>
     </main>
   );

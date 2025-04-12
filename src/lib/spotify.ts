@@ -28,22 +28,27 @@ async function getClientAccessToken(): Promise<string> {
 export async function getTrack(
   trackId: string,
   accessToken?: string
-): Promise<Track> {
+): Promise<Track | null> {
   'use cache';
 
   cacheLife('hours');
 
   const token = accessToken || (await getClientAccessToken());
 
-  const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) throw new Error('Failed to fetch track');
+    if (!res.ok) throw new Error('Failed to fetch track');
 
-  return res.json();
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function getTopTracks(
