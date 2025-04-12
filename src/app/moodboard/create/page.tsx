@@ -1,5 +1,7 @@
+import MoodboardForm from '@/components/moodboard-form';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/spotify';
+import { Track } from '@/lib/spotify.types';
 import { extractSpotifyTrackId } from '@/lib/utils';
 import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';
@@ -84,10 +86,19 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   }
 
   return (
+    <>
+      <TrackResult track={track} />
+      <MoodboardForm track={track} />
+    </>
+  );
+}
+
+function TrackResult({ track }: { track: Track }) {
+  return (
     <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
       <CardContent>
-        <div className="flex gap-4">
-          <div className="relative size-16 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+        <div className="flex gap-3">
+          <div className="relative size-12 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
             <Image
               src={track.album.images[0].url}
@@ -98,10 +109,10 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
             />
           </div>
           <div className="flex flex-col justify-center min-w-0">
-            <h3 className="font-bold lg:text-xl line-clamp-1 group-hover:text-primary transition-colors">
+            <h3 className="font-bold text-base line-clamp-1 group-hover:text-primary transition-colors">
               {track.name}
             </h3>
-            <p className="font-semibold text-sm lg:text-base text-muted-foreground line-clamp-1">
+            <p className="font-semibold text-xs text-muted-foreground line-clamp-1">
               {track.artists.map((artist) => artist.name).join(', ')}
             </p>
           </div>

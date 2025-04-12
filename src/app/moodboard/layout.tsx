@@ -12,7 +12,7 @@ export default function Moodboard({
 }) {
   return (
     <main className="grow bg-background">
-      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-4">
+      <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 flex flex-col items-center justify-center gap-4">
         <Suspense fallback={<TrackSearchSkeleton />}>
           <TrackSearch />
         </Suspense>
