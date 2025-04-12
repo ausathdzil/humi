@@ -1,22 +1,37 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import Form from 'next/form';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function TrackSearch() {
   const searchParams = useSearchParams();
-  const q = searchParams.get('q');
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('q', term);
+    } else {
+      params.delete('q');
+    }
+    router.replace(`${pathname}?${params}`);
+  }, 500);
 
   return (
-    <Form className="w-full flex justify-center" action="/moodboard/create">
+    <div className="w-full flex justify-center">
+      <label htmlFor="q" className="sr-only">
+        Search for a track
+      </label>
       <Input
         type="text"
         name="q"
         className="h-10 max-w-[500px]"
         placeholder="Enter a Spotify track URL or ID..."
-        defaultValue={q ?? ''}
+        onChange={(e) => handleSearch(e.target.value)}
+        defaultValue={searchParams.get('q') ?? ''}
       />
-    </Form>
+    </div>
   );
 }

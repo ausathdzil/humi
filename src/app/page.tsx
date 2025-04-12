@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
   AudioWaveformIcon,
   MicVocalIcon,
@@ -83,6 +84,7 @@ export default function Home() {
         </div>
 
         <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">
+          <TryHumiButton />
           <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
             Paste a Spotify link. Humi will analyze a song and generate a{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
@@ -91,7 +93,6 @@ export default function Home() {
             in seconds.
           </h2>
           <MoodboardExample />
-          <TryHumiButton />
         </div>
 
         <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-3 gap-8 lg:gap-16">
@@ -217,7 +218,7 @@ export default function Home() {
 
 function Footer() {
   return (
-    <footer className="px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 bg-primary text-primary-foreground">
+    <footer className="border-t font-medium px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>
@@ -252,17 +253,17 @@ function Footer() {
             <li>
               <Link
                 className="hover:text-primary-foreground transition-colors"
-                href="/privacy"
+                href="/terms"
               >
-                Privacy Policy
+                Terms of Service
               </Link>
             </li>
             <li>
               <Link
                 className="hover:text-primary-foreground transition-colors"
-                href="/terms"
+                href="/privacy"
               >
-                Terms of Service
+                Privacy Policy
               </Link>
             </li>
           </ul>
@@ -285,11 +286,11 @@ function Footer() {
           <li>
             <a
               className="hover:text-primary-foreground transition-colors"
-              href="https://x.com/ausathdzil"
+              href="https://www.instagram.com/ausathdzil"
               target="_blank"
               rel="noopener noreferrer"
             >
-              X
+              Instagram
             </a>
           </li>
           <li>
@@ -305,18 +306,28 @@ function Footer() {
           <li>
             <a
               className="hover:text-primary-foreground transition-colors"
-              href="https://www.instagram.com/ausathdzil"
+              href="https://x.com/ausathdzil"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Instagram
+              X
             </a>
           </li>
         </ul>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <span>Contact</span>
+      <div className="col-span-full flex flex-col gap-2 text-sm">
+        <p className="text-primary-foreground/80">
+          Made with 🤍 by{' '}
+          <a
+            href="https://ausathikram.com"
+            target="_blank"
+            className="hover:text-primary-foreground transition-colors"
+          >
+            Ausath Ikram
+          </a>
+        </p>
+
         <ul className="text-primary-foreground/80 space-y-2">
           <li>
             <a

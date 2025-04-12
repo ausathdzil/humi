@@ -5,6 +5,7 @@ import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { TrackResultSkeleton } from '@/components/skeletons';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 interface CreateMoodboardProps {
   searchParams: Promise<{
