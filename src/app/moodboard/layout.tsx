@@ -1,4 +1,7 @@
-import { TrackSearchSkeleton } from '@/components/skeletons';
+import {
+  TrackResultSkeleton,
+  TrackSearchSkeleton,
+} from '@/components/skeletons';
 import TrackSearch from '@/components/track-search';
 import { Suspense } from 'react';
 
@@ -13,7 +16,7 @@ export default function Moodboard({
         <Suspense fallback={<TrackSearchSkeleton />}>
           <TrackSearch />
         </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        <Suspense fallback={<TrackResultSkeleton />}>{children}</Suspense>
       </div>
     </main>
   );

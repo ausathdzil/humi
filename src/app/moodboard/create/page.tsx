@@ -1,10 +1,8 @@
-import { TrackResultSkeleton } from '@/components/skeletons';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/spotify';
 import { extractSpotifyTrackId } from '@/lib/utils';
 import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';
-import { Suspense } from 'react';
 
 interface CreateMoodboardProps {
   searchParams: Promise<{
@@ -86,33 +84,29 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   }
 
   return (
-    <Suspense fallback={<TrackResultSkeleton />}>
-      <div className="flex flex-col items-center gap-4">
-        <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none w-full max-w-4xl">
-          <CardContent>
-            <div className="flex flex-col gap-6">
-              <div className="relative w-[200px] sm:w-[300px] aspect-square rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
-                <Image
-                  src={track.album.images[0].url}
-                  alt={track.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                />
-              </div>
-              <div className="flex flex-col gap-2 text-center">
-                <h3 className="font-bold text-2xl line-clamp-1 group-hover:text-primary transition-colors">
-                  {track.name}
-                </h3>
-                <p className="font-semibold text-muted-foreground line-clamp-1">
-                  {track.artists.map((artist) => artist.name).join(', ')}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </Suspense>
+    <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
+      <CardContent>
+        <div className="flex gap-4">
+          <div className="relative size-16 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
+            <Image
+              src={track.album.images[0].url}
+              alt={track.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            />
+          </div>
+          <div className="flex flex-col justify-center min-w-0">
+            <h3 className="font-bold lg:text-xl line-clamp-1 group-hover:text-primary transition-colors">
+              {track.name}
+            </h3>
+            <p className="font-semibold text-sm lg:text-base text-muted-foreground line-clamp-1">
+              {track.artists.map((artist) => artist.name).join(', ')}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
