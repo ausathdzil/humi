@@ -14,6 +14,8 @@ export default function MoodboardForm({ track }: { track: Track }) {
   const artists = track.artists.map((artist) => artist.name).join(', ');
   const albumCover = track.album.images[0].url;
   const duration = track.duration_ms;
+  const releaseDate = track.album.release_date;
+  const popularity = track.popularity;
 
   return (
     <>
@@ -26,10 +28,24 @@ export default function MoodboardForm({ track }: { track: Track }) {
           formData.append('artists', artists);
           formData.append('albumCover', albumCover);
           formData.append('duration', duration.toString());
+          formData.append('releaseDate', releaseDate);
+          formData.append('popularity', popularity.toString());
 
-          const result = await streamMoodboard(formData);
-          setMoodboard(result);
-          setIsLoading(false);
+          try {
+            const result = await streamMoodboard(formData);
+            if (result) {
+              setMoodboard(result);
+            }
+          } catch (error) {
+            setMoodboard(
+              <p className="text-destructive font-semibold">
+                Sorry, we couldn&apos;t generate a moodboard for this track.{' '}
+                {error instanceof Error ? error.message : 'Unknown error'}
+              </p>
+            );
+          } finally {
+            setIsLoading(false);
+          }
         }}
       >
         <Button type="submit" size="lg" disabled={isLoading}>

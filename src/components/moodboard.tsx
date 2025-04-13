@@ -1,7 +1,49 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ColorFamily } from '@/lib/actions';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
+
+export const colorFamilies = [
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
+] as const;
+
+export type ColorFamily = (typeof colorFamilies)[number];
+
+export type Theme = {
+  baseColor: ColorFamily;
+  background: string;
+  text: {
+    title: string;
+    artist: string;
+  };
+  border?: string;
+  tag?: {
+    background: string;
+    text: string;
+    border: string;
+  };
+};
 
 export function Moodboard({
   title,
@@ -9,33 +51,27 @@ export function Moodboard({
   albumCover,
   moodTags,
   colors,
-  themeColor,
+  theme,
 }: {
   title: string;
   artists: string;
   albumCover: string;
   moodTags: string[];
   colors: string[];
-  themeColor: ColorFamily;
+  theme: Theme;
 }) {
-  const theme = {
-    from: `from-${themeColor}-50/50`,
-    to: `to-${themeColor}-50/50`,
-    border: `border-${themeColor}-100/50`,
-    gradient: `from-${themeColor}-900 to-${themeColor}-900`,
-    tag: `from-${themeColor}-100 to-${themeColor}-100`,
-    tagText: `text-${themeColor}-900`,
-    tagBorder: `border-${themeColor}-200/50`,
-    divider: `from-${themeColor}-200 to-${themeColor}-200`,
-  };
+  if (!colorFamilies.includes(theme.baseColor)) {
+    theme.baseColor = 'zinc';
+  }
 
   return (
-    <Card
-      className={`w-full max-w-[600px] bg-gradient-to-br ${theme.from} ${theme.to} shadow-none`}
-    >
+    <Card className={cn('w-full max-w-[600px] shadow-none', theme.background)}>
       <CardHeader>
         <div
-          className={`p-3 sm:p-4 flex items-center gap-3 sm:gap-4 bg-white/80 rounded-2xl backdrop-blur-sm border ${theme.border}`}
+          className={cn(
+            'p-3 sm:p-4 flex items-center gap-3 sm:gap-4 bg-white/10 rounded-2xl backdrop-blur-sm border',
+            theme.border || 'border-transparent'
+          )}
         >
           <div className="size-16 sm:size-24 rounded-2xl shadow-sm relative overflow-hidden">
             <Image
@@ -46,16 +82,22 @@ export function Moodboard({
               sizes="(max-width: 640px) 64px, 96px"
             />
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${theme.from.replace(
-                '/50',
-                '/20'
-              )} ${theme.to.replace('/50', '/20')}`}
+              className={cn('absolute inset-0', `bg-${theme.baseColor}-50/20`)}
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.3),transparent)]" />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg sm:text-2xl font-bold">{title}</h3>
-            <p className="text-muted-foreground font-semibold text-base sm:text-lg">
+            <h3
+              className={cn('text-lg sm:text-2xl font-bold', theme.text.title)}
+            >
+              {title}
+            </h3>
+            <p
+              className={cn(
+                'font-semibold text-base sm:text-lg',
+                theme.text.artist
+              )}
+            >
               {artists}
             </p>
           </div>
@@ -63,13 +105,31 @@ export function Moodboard({
       </CardHeader>
       <CardContent>
         <div
-          className={`p-3 sm:p-4 bg-white/80 rounded-2xl backdrop-blur-sm border ${theme.border}`}
+          className={cn(
+            'p-3 sm:p-4 bg-white/10 rounded-2xl backdrop-blur-sm border',
+            theme.border || 'border-transparent'
+          )}
         >
           <div className="flex flex-wrap gap-2 mb-4">
             {moodTags.map((tag) => (
               <span
                 key={tag}
-                className={`px-2 sm:px-3 py-1 bg-gradient-to-r ${theme.tag} ${theme.tagText} border ${theme.tagBorder} rounded-full text-xs sm:text-sm font-semibold hover:scale-105 transition-transform duration-200`}
+                className={cn(
+                  'px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold hover:scale-105 transition-transform duration-200',
+                  theme.tag
+                    ? cn(
+                        theme.tag.background,
+                        theme.tag.text,
+                        'border',
+                        theme.tag.border
+                      )
+                    : cn(
+                        'bg-white/10',
+                        `text-${theme.baseColor}-50`,
+                        'border',
+                        `border-${theme.baseColor}-200/50`
+                      )
+                )}
               >
                 {tag}
               </span>
