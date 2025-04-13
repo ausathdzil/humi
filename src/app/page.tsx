@@ -33,7 +33,7 @@ export default function Home() {
               <p className="font-semibold text-xl sm:text-2xl">
                 Humi creates{' '}
                 <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
-                  beautiful moodboards
+                  moodboards
                 </span>{' '}
                 from your favorite songs, visualizing the emotions and energy
                 behind the music you love.
@@ -87,14 +87,14 @@ export default function Home() {
           <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
             Paste a Spotify link. Humi will analyze a song and generate a{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
-              beautiful, shareable moodboard
+              moodboard
             </span>{' '}
             in seconds.
           </h2>
           <MoodboardExample />
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-3 gap-8 lg:gap-16">
+        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div className="py-4 sm:py-8 space-y-4">
             <Music4Icon
               className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-2 rounded-lg shadow-lg"
@@ -103,8 +103,8 @@ export default function Home() {
             <article className="space-y-4">
               <h2 className="font-bold text-2xl">Mood Tags</h2>
               <p className="font-semibold">
-                Get 3-5 mood tags that perfectly capture the emotional tone of
-                your favorite songs.
+                Get mood tags that perfectly capture the emotional tone of your
+                favorite songs.
               </p>
             </article>
           </div>
@@ -116,21 +116,8 @@ export default function Home() {
             <article className="space-y-4">
               <h2 className="font-bold text-2xl">Color Palette</h2>
               <p className="font-semibold">
-                Generate a unique color palette that visually represents the
-                mood and energy of your music.
-              </p>
-            </article>
-          </div>
-          <div className="py-4 sm:py-8 space-y-4">
-            <MicVocalIcon
-              className="bg-gradient-to-br from-cyan-500 to-cyan-600 text-primary-foreground p-2 rounded-lg shadow-lg"
-              size={36}
-            />
-            <article className="space-y-4">
-              <h2 className="font-bold text-2xl">Lyric Highlights</h2>
-              <p className="font-semibold">
-                Extract the most emotionally powerful lines from your favorite
-                songs.
+                Generate a color palette that visually represents the mood and
+                energy of your music.
               </p>
             </article>
           </div>
@@ -144,20 +131,18 @@ export default function Home() {
             <AccordionItem value="item-1">
               <AccordionTrigger>How does Humi work?</AccordionTrigger>
               <AccordionContent>
-                Humi analyzes your music using the Spotify API to extract audio
-                features, track metadata, and lyrics. We then processes this
-                data to identify mood tags, extract notable lyrics, and generate
-                a color palette that matches the emotional tone of the song. All
-                of this is combined into a beautiful, shareable moodboard.
+                Humi analyzes your music using the Spotify API to extract track
+                metadata. We then processes this data to identify mood tags and
+                generate a color palette that matches the emotional tone of the
+                song. All of this is combined into a shareable moodboard.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>Do I need a Spotify account?</AccordionTrigger>
               <AccordionContent>
-                You can either sign in with Spotify to access your personal
-                library and listening history, or you can paste a Spotify track
-                link without signing in. However, signing in provides a more
-                personalized experience and allows you to save your moodboards.
+                You can either sign in with Spotify or you can paste a Spotify
+                track link without signing in. However, signing in allows you to
+                save your moodboards.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
@@ -183,14 +168,13 @@ export default function Home() {
                 How accurate are the mood tags?
               </AccordionTrigger>
               <AccordionContent>
-                Our system uses open-source AI models to analyze audio features
-                and lyrics, generating mood tags that aim to capture the
-                emotional essence of a song. While music interpretation is
-                inherently subjective and can vary between listeners, we strive
-                to provide meaningful tags that help express the song&apos;s
-                emotional character. You can always regenerate the tags if
-                you&apos;d like to explore different interpretations of the
-                song.
+                Humi uses open-source AI models to generate mood tags that aim
+                to capture the emotional essence of a song. While music
+                interpretation is inherently subjective and can vary between
+                listeners, we strive to provide meaningful tags that help
+                express the song&apos;s emotional character. You can always
+                regenerate the tags if you&apos;d like to explore different
+                interpretations of the song.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -1,3 +1,4 @@
+import MoodboardExample from '@/components/moodboard-example';
 import MoodboardForm from '@/components/moodboard-form';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/spotify';
@@ -88,7 +89,9 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   return (
     <>
       <TrackResult track={track} />
-      <MoodboardForm track={track} />
+      <div className="w-full flex flex-col gap-8 items-center justify-center">
+        <MoodboardForm track={track} />
+      </div>
     </>
   );
 }

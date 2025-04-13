@@ -16,7 +16,7 @@ export default function MoodboardForm({ track }: { track: Track }) {
   const duration = track.duration_ms;
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center">
+    <>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -37,7 +37,7 @@ export default function MoodboardForm({ track }: { track: Track }) {
           Generate Moodboard
         </Button>
       </form>
-      <div className="mt-4">{moodboard}</div>
-    </div>
+      {moodboard}
+    </>
   );
 }
