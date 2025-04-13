@@ -11,7 +11,7 @@ export function RecentlyPlayedSkeleton() {
         >
           <CardContent>
             <div className="flex flex-col gap-2">
-              <div className="relative aspect-square rounded-lg overflow-hidden ring-1 ring-border/50">
+              <div className="relative aspect-square rounded-md overflow-hidden ring-1 ring-border/50">
                 <Skeleton className="w-full h-full" />
               </div>
               <div>
@@ -36,7 +36,7 @@ export function TopTracksSkeleton() {
         >
           <CardContent>
             <div className="flex gap-4">
-              <div className="relative size-16 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50">
+              <div className="relative size-16 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50">
                 <Skeleton className="w-full h-full" />
               </div>
               <div className="w-1/2 flex flex-col justify-center min-w-0">
@@ -71,10 +71,10 @@ export function ProfileInfoSkeleton() {
 export function TrackResultSkeleton() {
   return (
     <>
-      <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
+      <Card className="w-[300px] overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
         <CardContent>
           <div className="flex gap-3">
-            <div className="relative size-12 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+            <div className="relative size-12 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
               <Skeleton className="w-full h-full" />
             </div>

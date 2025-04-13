@@ -97,10 +97,10 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
 
 function TrackResult({ track }: { track: Track }) {
   return (
-    <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
+    <Card className="w-[280px] bg-primary/5 sm:bg-background sm:hover:bg-primary/5 group transition-colors border-primary/10 border-2 shadow-none">
       <CardContent>
         <div className="flex gap-3">
-          <div className="relative size-12 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+          <div className="relative size-12 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
             <Image
               src={track.album.images[0].url}

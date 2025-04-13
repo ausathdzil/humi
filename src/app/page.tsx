@@ -8,7 +8,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { AudioWaveformIcon, Music4Icon, SwatchBookIcon } from 'lucide-react';
+import {
+  AudioWaveformIcon,
+  ChevronRightIcon,
+  Music4Icon,
+  SwatchBookIcon,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,16 +21,16 @@ export default function Home() {
   return (
     <>
       <main className="grow flex flex-col bg-background">
-        <div className="px-4 sm:px-8 md:px-16 py-16 md:py-24 lg:py-32 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-          <div className="w-full md:max-w-1/2 flex flex-col items-center md:items-start gap-8">
-            <article className="space-y-4 text-center md:text-left">
-              <h1 className="font-bold text-3xl md:text-6xl">
+        <div className="px-4 sm:px-8 md:px-16 py-16 md:py-24 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-16">
+          <div className="w-full md:max-w-1/2 flex flex-col items-center lg:items-start gap-8">
+            <article className="space-y-4 text-center lg:text-left">
+              <h1 className="font-bold text-3xl lg:text-6xl">
                 Turn Your Music Into{' '}
                 <span className="font-serif font-semibold bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                   Visual Emotions
                 </span>
               </h1>
-              <p className="font-semibold text-lg sm:text-2xl">
+              <p className="font-semibold lg:text-2xl">
                 Humi creates{' '}
                 <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
                   moodboards
@@ -34,7 +39,7 @@ export default function Home() {
                 behind the music you love.
               </p>
             </article>
-            <div className="flex flex-col lg:flex-row items-start gap-4">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4">
               <Button asChild className="w-fit" size="lg">
                 <Link href="/moodboard/create">
                   <Music4Icon />
@@ -77,8 +82,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">
-          <TryHumiButton />
+        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
           <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
             Paste a Spotify link. Humi will analyze a song and generate a{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
@@ -86,14 +90,15 @@ export default function Home() {
             </span>{' '}
             in seconds.
           </h2>
+          <TryHumiButton />
           <MoodboardExample />
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
-          <div className="py-4 sm:py-8 space-y-4">
+        <div className="bg-primary/5 px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
+          <div className="p-8 space-y-4 bg-primary/10 rounded-xl">
             <Music4Icon
-              className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-2 rounded-lg shadow-lg"
-              size={36}
+              className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-3 rounded-sm shadow-lg"
+              size={48}
             />
             <article className="space-y-4">
               <h2 className="font-bold text-2xl">Mood Tags</h2>
@@ -103,10 +108,10 @@ export default function Home() {
               </p>
             </article>
           </div>
-          <div className="py-4 sm:py-8 space-y-4">
+          <div className="p-8 space-y-4 bg-pink-500/10 rounded-xl">
             <SwatchBookIcon
-              className="bg-gradient-to-br from-blue-500 to-blue-600 text-primary-foreground p-2 rounded-lg shadow-lg"
-              size={36}
+              className="bg-gradient-to-br from-blue-500 to-blue-600 text-primary-foreground p-3 rounded-sm shadow-lg"
+              size={48}
             />
             <article className="space-y-4">
               <h2 className="font-bold text-2xl">Color Palette</h2>
@@ -118,7 +123,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 border-y flex flex-col items-center justify-center gap-6 md:gap-8">
+        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl text-center">
             Frequently Asked Questions
           </h2>
@@ -173,9 +178,16 @@ export default function Home() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+
+          <Button asChild className="w-fit" size="lg" variant="ghost">
+            <Link href="/faqs">
+              See More FAQs
+              <ChevronRightIcon />
+            </Link>
+          </Button>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-4">
+        <div className="bg-primary/5 px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-center">
             Try Humi for Free
           </h2>
@@ -196,7 +208,7 @@ export default function Home() {
 
 function Footer() {
   return (
-    <footer className="border-t font-medium px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
+    <footer className="font-medium px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>

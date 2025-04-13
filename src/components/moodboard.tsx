@@ -88,7 +88,7 @@ export function Moodboard({
           </div>
           <div className="flex-1">
             <h3
-              className={cn('text-lg sm:text-2xl font-bold', theme.text.title)}
+              className={cn('text-lg sm:text-2xl font-bold line-clamp-1', theme.text.title)}
             >
               {title}
             </h3>

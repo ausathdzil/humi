@@ -7,27 +7,34 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SVGProps, useState } from 'react';
 
-export function AuthButton() {
+export function AuthInfo() {
   const session = useSession();
 
-  return session.data ? (
-    <div className="flex items-center gap-2 sm:gap-4">
-      <span className="text-sm sm:text-lg font-bold">
-        👋 Hey, {session.data.user.name}!
-      </span>
-      <Button variant="secondary" size="lg" asChild>
-        <Link href="/profile">
-          <UserRoundIcon />
-          Profile
-        </Link>
-      </Button>
-    </div>
-  ) : (
-    <SignInButton />
+  if (!session.data) {
+    return null;
+  }
+
+  return (
+    session.data.user && (
+      <div className="flex items-center gap-2 sm:gap-4">
+        <span className="text-sm sm:text-lg font-bold">
+          👋 Hey, {session.data.user.name}
+        </span>
+        <Button variant="ghost" asChild>
+          <Link href="/profile">
+            <UserRoundIcon />
+          </Link>
+        </Button>
+      </div>
+    )
   );
 }
 
-export function SignOutButton() {
+export function SignOutButton({
+  handleNavigation,
+}: {
+  handleNavigation?: () => void;
+}) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -46,6 +53,7 @@ export function SignOutButton() {
             onSuccess: () => {
               router.push('/');
               setLoading(false);
+              handleNavigation?.();
             },
           },
         });

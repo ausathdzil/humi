@@ -112,7 +112,7 @@ async function RecentlyPlayed() {
           <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
             <CardContent>
               <div className="flex flex-col gap-2">
-                <div className="relative aspect-square rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+                <div className="relative aspect-square rounded-md overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
                   <Image
                     src={item.track.album.images[0].url}
@@ -159,7 +159,7 @@ async function TopTracks() {
           >
             <CardContent>
               <div className="flex gap-4">
-                <div className="relative size-16 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+                <div className="relative size-16 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
                   <Image
                     src={item.album.images[0].url}

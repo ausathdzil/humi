@@ -13,26 +13,14 @@ export default function Moodboard({
   return (
     <main className="grow bg-background">
       <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 flex flex-col items-center justify-center gap-4">
-        <Suspense
-          fallback={
-            <ViewTransition>
-              <TrackSearchSkeleton />
-            </ViewTransition>
-          }
-        >
-          <ViewTransition>
+        <ViewTransition>
+          <Suspense fallback={<TrackSearchSkeleton />}>
             <TrackSearch />
-          </ViewTransition>
-        </Suspense>
-        <Suspense
-          fallback={
-            <ViewTransition>
-              <TrackResultSkeleton />
-            </ViewTransition>
-          }
-        >
-          <ViewTransition>{children}</ViewTransition>
-        </Suspense>
+          </Suspense>
+        </ViewTransition>
+        <ViewTransition>
+          <Suspense fallback={<TrackResultSkeleton />}>{children}</Suspense>
+        </ViewTransition>
       </div>
     </main>
   );

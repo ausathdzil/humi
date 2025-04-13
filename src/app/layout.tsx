@@ -1,11 +1,12 @@
-import { AuthButton } from '@/components/auth-button';
+import { AuthInfo } from '@/components/auth-button';
+import SideNav from '@/components/side-nav';
 import { Loader } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Lora } from 'next/font/google';
 import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
+import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
 import './globals.css';
 
 const pretendard = localFont({
@@ -40,10 +41,12 @@ export default function RootLayout({
         className={`${pretendard.variable} ${lora.variable} font-sans antialiased min-h-screen flex flex-col`}
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
-        <Suspense fallback={<Loading />}>
-          <Header />
-          {children}
-        </Suspense>
+        <ViewTransition>
+          <Suspense fallback={<Loading />}>
+            <Header />
+            {children}
+          </Suspense>
+        </ViewTransition>
       </body>
     </html>
   );
@@ -59,7 +62,7 @@ function Loading() {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 px-4 sm:px-8 md:px-16 py-4 transition-all border-b bg-background/80 backdrop-blur-md">
+    <header className="px-4 sm:px-8 md:px-16 py-4 transition-all border-b">
       <nav className="flex items-center justify-between">
         <ul className="flex items-center justify-between gap-4 sm:gap-8">
           <li>
@@ -72,9 +75,10 @@ export function Header() {
             </Link>
           </li>
         </ul>
-        <Suspense fallback={null}>
-          <AuthButton />
-        </Suspense>
+        <div className="flex items-center md:gap-4">
+          <AuthInfo />
+          <SideNav />
+        </div>
       </nav>
     </header>
   );
