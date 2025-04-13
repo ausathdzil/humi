@@ -56,14 +56,14 @@ export default function SideNav() {
       onOpenChange={handleOpenChange}
     >
       <Drawer.Trigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button aria-label="Side Navigation" variant="ghost" size="icon">
           <MenuIcon />
         </Button>
       </Drawer.Trigger>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-muted-foreground/50" />
+        <Drawer.Overlay className="fixed inset-0 z-55 bg-muted-foreground/50" />
         <Drawer.Content
-          className="right-2 top-2 bottom-2 fixed z-10 outline-none w-full max-w-[310px] flex"
+          className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[310px] flex"
           style={
             { '--initial-transform': 'calc(100% + 8px)' } as React.CSSProperties
           }

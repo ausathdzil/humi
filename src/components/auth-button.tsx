@@ -17,10 +17,10 @@ export function AuthInfo() {
   return (
     session.data.user && (
       <div className="flex items-center gap-2 sm:gap-4">
-        <span className="text-sm sm:text-lg font-bold">
+        <span className="hidden sm:block text-lg font-bold">
           👋 Hey, {session.data.user.name}
         </span>
-        <Button variant="ghost" asChild>
+        <Button aria-label="Profile" variant="ghost" size="icon" asChild>
           <Link href="/profile">
             <UserRoundIcon />
           </Link>

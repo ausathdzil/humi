@@ -1,12 +1,13 @@
 import { AuthInfo } from '@/components/auth-button';
 import SideNav from '@/components/side-nav';
-import { Loader } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Loader, SparklesIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Lora } from 'next/font/google';
 import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
+import { Suspense } from 'react';
 import './globals.css';
 
 const pretendard = localFont({
@@ -41,12 +42,10 @@ export default function RootLayout({
         className={`${pretendard.variable} ${lora.variable} font-sans antialiased min-h-screen flex flex-col`}
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
-        <ViewTransition>
-          <Suspense fallback={<Loading />}>
-            <Header />
-            {children}
-          </Suspense>
-        </ViewTransition>
+        <Suspense fallback={<Loading />}>
+          <Header />
+          {children}
+        </Suspense>
       </body>
     </html>
   );
@@ -62,11 +61,12 @@ function Loading() {
 
 export function Header() {
   return (
-    <header className="px-4 sm:px-8 md:px-16 py-4 transition-all border-b">
+    <header className="sticky top-0 z-50 px-8 md:px-16 py-4 md:py-8 transition-all bg-background/90 backdrop-blur-sm">
       <nav className="flex items-center justify-between">
         <ul className="flex items-center justify-between gap-4 sm:gap-8">
           <li>
             <Link
+              aria-label="Home"
               className="hover:text-primary transition-colors flex items-center gap-2 font-bold text-xl sm:text-2xl"
               href="/"
             >
@@ -75,8 +75,18 @@ export function Header() {
             </Link>
           </li>
         </ul>
-        <div className="flex items-center md:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <AuthInfo />
+          <Button
+            aria-label="Create Moodboard"
+            variant="ghost"
+            size="icon"
+            asChild
+          >
+            <Link href="/moodboard/create">
+              <SparklesIcon />
+            </Link>
+          </Button>
           <SideNav />
         </div>
       </nav>

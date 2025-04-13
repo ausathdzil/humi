@@ -88,7 +88,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   return (
     <>
       <TrackResult track={track} />
-      <div className="w-full flex flex-col gap-8 items-center justify-center">
+      <div className="w-full flex flex-col gap-4 items-center justify-center">
         <MoodboardForm track={track} />
       </div>
     </>
@@ -97,7 +97,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
 
 function TrackResult({ track }: { track: Track }) {
   return (
-    <Card className="w-[280px] bg-primary/5 sm:bg-background sm:hover:bg-primary/5 group transition-colors border-primary/10 border-2 shadow-none">
+    <Card className="w-full max-w-[240px] sm:max-w-[300px] bg-primary/5 sm:bg-background sm:hover:bg-primary/5 group transition-colors border-primary/10 border-2 shadow-none">
       <CardContent>
         <div className="flex gap-3">
           <div className="relative size-12 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">

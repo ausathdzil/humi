@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <>
       <main className="grow flex flex-col bg-background">
-        <div className="px-4 sm:px-8 md:px-16 py-16 md:py-24 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-16">
+        <div className="px-8 md:px-16 py-16 md:py-24 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-16">
           <div className="w-full md:max-w-1/2 flex flex-col items-center lg:items-start gap-8">
             <article className="space-y-4 text-center lg:text-left">
               <h1 className="font-bold text-3xl lg:text-6xl">
@@ -75,6 +75,8 @@ export default function Home() {
                   width={300}
                   height={300}
                   className="object-cover"
+                  priority
+                  loading="eager"
                 />
               </div>
               <div className="absolute inset-0 rounded-full border-4 border-black/20" />
@@ -82,7 +84,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
+        <div className="px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
           <h2 className="font-bold text-xl sm:text-2xl text-center w-full md:w-1/2">
             Paste a Spotify link. Humi will analyze a song and generate a{' '}
             <span className="font-serif bg-gradient-to-r from-pink-500 to-cyan-500 via-blue-500 text-transparent bg-clip-text">
@@ -94,7 +96,7 @@ export default function Home() {
           <MoodboardExample />
         </div>
 
-        <div className="bg-primary/5 px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
+        <div className="bg-primary/5 px-8 md:px-16 py-8 sm:py-12 md:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div className="p-8 space-y-4 bg-primary/10 rounded-xl">
             <Music4Icon
               className="bg-gradient-to-br from-pink-500 to-pink-600 text-primary-foreground p-3 rounded-sm shadow-lg"
@@ -123,7 +125,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
+        <div className="px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl text-center">
             Frequently Asked Questions
           </h2>
@@ -187,7 +189,7 @@ export default function Home() {
           </Button>
         </div>
 
-        <div className="bg-primary/5 px-4 sm:px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-8">
+        <div className="bg-primary/5 px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-center">
             Try Humi for Free
           </h2>
@@ -208,7 +210,7 @@ export default function Home() {
 
 function Footer() {
   return (
-    <footer className="font-medium px-4 sm:px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
+    <footer className="font-medium px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>
