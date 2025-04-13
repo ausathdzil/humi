@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export function RecentlyPlayedSkeleton() {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {Array.from({ length: 5 }).map((_, i) => (
         <Card
           key={i}
@@ -70,19 +70,25 @@ export function ProfileInfoSkeleton() {
 
 export function TrackResultSkeleton() {
   return (
-    <Card className="bg-none border-none shadow-none w-[300px]">
-      <CardContent>
-        <div className="flex gap-4">
-          <div className="relative size-16 flex-shrink-0 rounded-lg ring-1 ring-border/50">
-            <Skeleton className="w-full h-full" />
+    <>
+      <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
+        <CardContent>
+          <div className="flex gap-3">
+            <div className="relative size-12 flex-shrink-0 rounded-lg overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
+              <Skeleton className="w-full h-full" />
+            </div>
+            <div className="flex flex-col justify-center min-w-0">
+              <Skeleton className="h-5 w-32 mb-1" />
+              <Skeleton className="h-4 w-24" />
+            </div>
           </div>
-          <div className="w-1/2 flex flex-col justify-center min-w-0">
-            <Skeleton className="h-6 w-full mb-1 lg:h-7" />
-            <Skeleton className="h-4 w-3/4 lg:h-5" />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <div className="w-full flex flex-col gap-8 items-center justify-center">
+        <Skeleton className="h-10 w-56 rounded-full" />
+      </div>
+    </>
   );
 }
 

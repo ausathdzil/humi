@@ -3,7 +3,7 @@ import {
   TrackSearchSkeleton,
 } from '@/components/skeletons';
 import TrackSearch from '@/components/track-search';
-import { Suspense } from 'react';
+import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function Moodboard({
   children,
@@ -13,10 +13,26 @@ export default function Moodboard({
   return (
     <main className="grow bg-background">
       <div className="px-4 sm:px-8 md:px-16 py-8 sm:py-12 flex flex-col items-center justify-center gap-4">
-        <Suspense fallback={<TrackSearchSkeleton />}>
-          <TrackSearch />
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <TrackSearchSkeleton />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>
+            <TrackSearch />
+          </ViewTransition>
         </Suspense>
-        <Suspense fallback={<TrackResultSkeleton />}>{children}</Suspense>
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <TrackResultSkeleton />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>{children}</ViewTransition>
+        </Suspense>
       </div>
     </main>
   );

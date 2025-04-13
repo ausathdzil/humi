@@ -46,6 +46,7 @@ export async function getTrack(
 
     const data = await res.json();
     return data;
+    /* eslint-disable @typescript-eslint/no-unused-vars */
   } catch (error) {
     return null;
   }

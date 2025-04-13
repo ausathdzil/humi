@@ -1,4 +1,3 @@
-import MoodboardExample from '@/components/moodboard-example';
 import MoodboardForm from '@/components/moodboard-form';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/spotify';
