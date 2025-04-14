@@ -1,10 +1,7 @@
-import { SignOutButton } from '@/components/auth-button';
 import {
-  ProfileInfoSkeleton,
   RecentlyPlayedSkeleton,
-  TopTracksSkeleton,
+  TopTracksSkeleton
 } from '@/components/skeletons';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { getAccessToken, getUser } from '@/db/data';
 import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
@@ -12,27 +9,12 @@ import { SimplifiedArtist } from '@/lib/spotify.types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { unauthorized } from 'next/navigation';
-import { Suspense } from 'react';
-import { unstable_ViewTransition as ViewTransition } from 'react';
+import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function Profile() {
   return (
     <main className="grow bg-background">
-      <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-16">
-        <div className="flex flex-col gap-4 items-center justify-center w-full">
-          <h1 className="text-2xl font-bold">Profile</h1>
-          <Suspense
-            fallback={
-              <ViewTransition>
-                <ProfileInfoSkeleton />
-              </ViewTransition>
-            }
-          >
-            <ViewTransition>
-              <ProfileInfo />
-            </ViewTransition>
-          </Suspense>
-        </div>
+      <div className="p-4 sm:p-8 flex flex-col items-center justify-center gap-16">
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <h2 className="text-xl text-center font-bold">Recently Played</h2>
           <Suspense
@@ -66,35 +48,6 @@ export default function Profile() {
   );
 }
 
-async function ProfileInfo() {
-  const user = await getUser();
-
-  if (!user) {
-    unauthorized();
-  }
-
-  return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="flex items-center gap-4">
-        <Avatar className="size-16">
-          <AvatarImage src={user.image ?? undefined} />
-          <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div>
-          <h2 className="text-xl font-bold">{user.name}</h2>
-          <p className="font-semibold text-muted-foreground">{user.email}</p>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        {/* <Button variant="secondary" size="lg" asChild>
-          <Link href="/settings">Edit Profile</Link>
-        </Button> */}
-        <SignOutButton />
-      </div>
-    </div>
-  );
-}
-
 async function RecentlyPlayed() {
   const user = await getUser();
 
@@ -107,8 +60,8 @@ async function RecentlyPlayed() {
 
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      {recentlyPlayed.items.map((item) => (
-        <Link key={item.track.id} href={`/moodboard/create?q=${item.track.id}`}>
+      {recentlyPlayed.items.map((item, i) => (
+        <Link key={i} href={`/moodboard/create?q=${item.track.id}`}>
           <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
             <CardContent>
               <div className="flex flex-col gap-2">
@@ -151,12 +104,9 @@ async function TopTracks() {
 
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {topTracks.items.map((item) => (
-        <Link key={item.id} href={`/moodboard/create?q=${item.id}`}>
-          <Card
-            key={item.id}
-            className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none"
-          >
+      {topTracks.items.map((item, i) => (
+        <Link key={i} href={`/moodboard/create?q=${item.id}`}>
+          <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
             <CardContent>
               <div className="flex gap-4">
                 <div className="relative size-16 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50 group-hover:ring-primary/50 transition-all">

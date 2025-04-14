@@ -2,25 +2,27 @@ import { getTrack } from '@/lib/spotify';
 import { Moodboard, Theme } from './moodboard';
 
 export default async function MoodboardExample() {
-  const exampleTrack = await getTrack('7Cu2COdH93MnuireuKNiS3');
+  const exampleTrack = await getTrack('3be9ACTxtcL6Zm4vJRUiPG');
 
   if (!exampleTrack) {
     return null;
   }
 
-  const moodTags = ['Soulful', 'Smooth', 'Intimate', 'Warm'];
-  const colors = ['#C9ADA7', '#A68A86', '#8C6A5A', '#6E4A37', '#502A14'];
+  const moodTags = ['Dreamy', 'Chill', 'Relaxing', 'Soothing'];
+  
+  const colors = [
+    '#90caf9',
+    '#64b5f6',
+    '#42a5f5',
+    '#2196f3',
+    '#1e88e5',
+    '#1565c0',
+  ];
 
   const theme: Theme = {
-    baseColor: 'stone',
-    background: 'bg-stone-800',
-    text: { title: 'text-stone-50', artist: 'text-stone-100' },
-    border: 'border-stone-700/50',
-    tag: {
-      background: 'bg-stone-700',
-      text: 'text-stone-50',
-      border: 'border-stone-600/50',
-    },
+    background: '#e3f2fd',
+    text: { title: '#1565c0', artist: '#1e88e5' },
+    tag: { background: '#bbdefb', text: '#1565c0' },
   };
 
   return (

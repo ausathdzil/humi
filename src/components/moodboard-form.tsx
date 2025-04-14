@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { streamMoodboard } from '@/lib/actions';
 import { Track } from '@/lib/spotify.types';
-import { Loader, SparklesIcon } from 'lucide-react';
+import { LoaderIcon, SparklesIcon } from 'lucide-react';
 import { useState } from 'react';
 
 export default function MoodboardForm({ track }: { track: Track }) {
@@ -23,6 +23,7 @@ export default function MoodboardForm({ track }: { track: Track }) {
         onSubmit={async (e) => {
           e.preventDefault();
           setIsLoading(true);
+
           const formData = new FormData();
           formData.append('title', title);
           formData.append('artists', artists);
@@ -31,25 +32,18 @@ export default function MoodboardForm({ track }: { track: Track }) {
           formData.append('releaseDate', releaseDate);
           formData.append('popularity', popularity.toString());
 
-          try {
-            const result = await streamMoodboard(formData);
-            if (result) {
-              setMoodboard(result);
-            }
-          } catch (error) {
-            setMoodboard(
-              <p className="text-destructive font-semibold">
-                Sorry, we couldn&apos;t generate a moodboard for this track.{' '}
-                {error instanceof Error ? error.message : 'Unknown error'}
-              </p>
-            );
-          } finally {
-            setIsLoading(false);
-          }
+          const result = await streamMoodboard(formData);
+
+          setMoodboard(result);
+          setIsLoading(false);
         }}
       >
         <Button type="submit" size="lg" disabled={isLoading}>
-          {isLoading ? <Loader className="animate-spin" /> : <SparklesIcon />}
+          {isLoading ? (
+            <LoaderIcon className="animate-spin" />
+          ) : (
+            <SparklesIcon />
+          )}
           Generate Moodboard
         </Button>
       </form>

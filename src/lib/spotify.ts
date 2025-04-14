@@ -1,4 +1,7 @@
-import { unstable_cacheLife as cacheLife } from 'next/cache';
+import {
+  unstable_cacheLife as cacheLife,
+  unstable_cacheTag as cacheTag,
+} from 'next/cache';
 import {
   RecentlyPlayedResponse,
   TopTracksResponse,
@@ -31,6 +34,7 @@ export async function getTrack(
 ): Promise<Track | null> {
   'use cache';
 
+  cacheTag('track');
   cacheLife('hours');
 
   const token = accessToken || (await getClientAccessToken());
@@ -57,6 +61,7 @@ export async function getTopTracks(
 ): Promise<TopTracksResponse> {
   'use cache';
 
+  cacheTag('top-tracks');
   cacheLife('hours');
 
   const res = await fetch('https://api.spotify.com/v1/me/top/tracks', {
@@ -77,7 +82,8 @@ export async function getRecentlyPlayed(
 ): Promise<RecentlyPlayedResponse> {
   'use cache';
 
-  cacheLife('minutes');
+  cacheTag('recently-played');
+  cacheLife('hours');
 
   const res = await fetch(
     'https://api.spotify.com/v1/me/player/recently-played?limit=5',

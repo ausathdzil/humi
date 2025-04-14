@@ -63,12 +63,12 @@ export default function SideNav() {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-55 bg-muted-foreground/50" />
         <Drawer.Content
-          className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[310px] flex"
+          className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[240px] sm:w-[310px] flex"
           style={
             { '--initial-transform': 'calc(100% + 8px)' } as React.CSSProperties
           }
         >
-          <div className="bg-background size-full grow p-5 flex flex-col rounded-3xl">
+          <div className="bg-background/80 backdrop-blur-sm size-full grow p-5 flex flex-col rounded-3xl">
             <div className="max-w-md mx-auto">
               <Drawer.Title className="font-bold mb-2">Humi</Drawer.Title>
             </div>
