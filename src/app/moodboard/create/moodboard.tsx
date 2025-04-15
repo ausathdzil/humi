@@ -5,11 +5,13 @@ import { saveMoodboard } from '@/db/action';
 import { generateMoodboard } from '@/lib/actions';
 import { useSession } from '@/lib/auth-client';
 import { Track } from '@/lib/types';
+import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useState, useTransition } from 'react';
+import { useActionState, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
-export type Theme = {
+export interface Theme {
   background: string;
   text: {
     title: string;
@@ -19,13 +21,15 @@ export type Theme = {
     background: string;
     text: string;
   };
-};
+}
 
 export function MoodboardForm({ track }: { track: Track }) {
   const [isLoading, setIsLoading] = useState(false);
   const [moodboardData, setMoodboardData] = useState<Awaited<
     ReturnType<typeof generateMoodboard>
   > | null>(null);
+
+  const session = useSession();
 
   const title = track.name;
   const artists = track.artists.map((artist) => artist.name).join(', ');
@@ -80,6 +84,7 @@ export function MoodboardForm({ track }: { track: Track }) {
           />
           <div className="flex justify-end">
             <SaveMoodboard
+              session={session.data ? session.data.session : null}
               trackId={track.id}
               colors={moodboardData.colors}
               moodTags={moodboardData.moodTags}
@@ -92,21 +97,18 @@ export function MoodboardForm({ track }: { track: Track }) {
   );
 }
 
-export function Moodboard({
-  title,
-  artists,
-  albumCover,
-  moodTags,
-  colors,
-  theme,
-}: {
+interface MoodboardProps {
   title: string;
   artists: string;
   albumCover: string;
   moodTags: string[];
   colors: string[];
   theme: Theme;
-}) {
+}
+
+export function Moodboard(props: MoodboardProps) {
+  const { title, artists, albumCover, moodTags, colors, theme } = props;
+
   return (
     <div
       className="w-full max-w-[600px] shadow-none rounded-lg"
@@ -181,39 +183,44 @@ export function Moodboard({
   );
 }
 
-function SaveMoodboard({
-  trackId,
-  colors,
-  moodTags,
-  theme,
-}: {
+interface SaveMoodboardProps {
+  session: Session | null;
   trackId: string;
   colors: string[];
   moodTags: string[];
   theme: Theme;
-}) {
-  const [isPending, startTransition] = useTransition();
+}
 
-  const session = useSession();
-  if (!session.data || !session.data.user) {
-    return null;
-  }
+function SaveMoodboard(props: SaveMoodboardProps) {
+  const { session, trackId, colors, moodTags, theme } = props;
 
-  const user = session.data.user;
-  const saveMoodboardWithUserId = saveMoodboard.bind(null, user.id);
-  const handleAction = async (formData: FormData) => {
-    startTransition(() => {
-      saveMoodboardWithUserId(formData);
-    });
-  };
+  const saveMoodboardWithUserId = saveMoodboard.bind(null, session?.userId);
+  const [state, formAction, isPending] = useActionState(
+    saveMoodboardWithUserId,
+    null
+  );
+
+  useEffect(() => {
+    if (state && state.message) {
+      if (state.success) {
+        toast.success(state.message, {
+          position: 'top-center',
+        });
+      } else {
+        toast.error(state.message, {
+          position: 'top-center',
+        });
+      }
+    }
+  }, [state]);
 
   return (
-    <form action={handleAction}>
+    <form action={formAction}>
       <input type="hidden" name="trackId" value={trackId} />
       <input type="hidden" name="colors" value={colors} />
       <input type="hidden" name="moodTags" value={moodTags} />
       <input type="hidden" name="theme" value={JSON.stringify(theme)} />
-      <Button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending || !session}>
         {isPending ? <LoaderIcon className="animate-spin" /> : <SaveIcon />}
         Save Moodboard
       </Button>

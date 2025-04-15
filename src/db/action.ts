@@ -1,7 +1,6 @@
 'use server';
 
 import { db } from '@/db';
-import { getUser } from '@/db/data';
 import { moodboard } from '@/db/schema';
 import { revalidateTag } from 'next/cache';
 import { z } from 'zod';
@@ -23,10 +22,15 @@ const SaveMoodboardSchema = z.object({
   }),
 });
 
-export async function saveMoodboard(userId: string, formData: FormData) {
-  const user = await getUser();
-  if (!user) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function saveMoodboard(
+  userId: string | undefined,
+  prevState: any,
+  formData: FormData
+) {
+  if (!userId) {
     return {
+      success: false,
       error: 'Unauthorized',
     };
   }
@@ -41,8 +45,8 @@ export async function saveMoodboard(userId: string, formData: FormData) {
   const validatedFields = SaveMoodboardSchema.safeParse(rawFormData);
 
   if (!validatedFields.success) {
-    console.error(validatedFields.error.flatten().fieldErrors);
     return {
+      success: false,
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
@@ -61,11 +65,16 @@ export async function saveMoodboard(userId: string, formData: FormData) {
     .returning({ id: moodboard.id });
 
   if (data.length === 0) {
-    console.error('Failed to save moodboard');
     return {
+      success: false,
       message: 'Failed to save moodboard',
     };
   }
 
   revalidateTag(`moodboards:${userId}`);
+
+  return {
+    success: true,
+    message: 'Moodboard saved successfully',
+  };
 }

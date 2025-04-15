@@ -21,10 +21,10 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
       <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 text-center min-h-[60vh] px-4">
         <Disc3 className="size-10 sm:size-16 text-muted-foreground" />
         <h1 className="text-xl sm:text-3xl font-bold text-muted-foreground">
-          Create a Moodboard
+          Generate a Moodboard
         </h1>
         <p className="text-sm sm:text-lg max-w-md font-semibold text-muted-foreground text-center">
-          Enter a Spotify track URL or ID in the search bar above to create a
+          Enter a Spotify track URL or ID in the search bar above to generate a
           moodboard.
           <br />
           <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
@@ -86,7 +86,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   }
 
   return (
-    <div className="w-full flex flex-col gap-4 items-center justify-end">
+    <div className="w-full flex flex-col gap-4 items-center justify-center">
       <TrackResult track={track} />
       <MoodboardForm track={track} />
     </div>

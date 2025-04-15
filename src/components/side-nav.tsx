@@ -1,11 +1,12 @@
 'use client';
 
 import { SignInButton, SignOutButton } from '@/components/auth-components';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from '@/lib/auth-client';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
+  ArchiveIcon,
   HelpCircleIcon,
   HomeIcon,
   InfoIcon,
@@ -18,6 +19,11 @@ import { useCallback, useState } from 'react';
 import { Drawer } from 'vaul';
 
 const navItems = [
+  {
+    href: '/moodboard/create',
+    icon: <SparklesIcon />,
+    label: 'Generate',
+  },
   {
     href: '/',
     icon: <HomeIcon />,
@@ -61,50 +67,54 @@ export function SideNav() {
         </Button>
       </Drawer.Trigger>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 z-55 bg-muted-foreground/50" />
+        <Drawer.Overlay className="fixed inset-0 z-55 bg-muted-foreground/60" />
         <Drawer.Content
           className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[240px] sm:w-[310px] flex"
           style={
             { '--initial-transform': 'calc(100% + 8px)' } as React.CSSProperties
           }
         >
-          <div className="bg-background/80 backdrop-blur-sm size-full grow p-5 flex flex-col rounded-3xl">
+          <div className="bg-background/90 backdrop-blur-sm size-full grow p-5 flex flex-col rounded-3xl">
             <div className="max-w-md mx-auto">
               <Drawer.Title className="font-bold mb-2">Humi</Drawer.Title>
             </div>
             <div className="grow flex flex-col">
               <ul className="space-y-2">
                 {user && (
-                  <li>
-                    <Button
-                      className="w-full justify-start"
-                      variant="ghost"
-                      asChild
-                      size="lg"
-                    >
-                      <Link href="/profile" onClick={handleNavigation}>
-                        <UserRoundIcon />
-                        Profile
-                      </Link>
-                    </Button>
-                  </li>
+                  <>
+                    <li>
+                      <Button
+                        className="w-full justify-start"
+                        variant="ghost"
+                        asChild
+                        size="lg"
+                      >
+                        <Link href="/profile" onClick={handleNavigation}>
+                          <UserRoundIcon />
+                          Profile
+                        </Link>
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        className="w-full justify-start"
+                        variant="ghost"
+                        asChild
+                        size="lg"
+                      >
+                        <Link
+                          href="/profile/moodboards"
+                          onClick={handleNavigation}
+                        >
+                          <ArchiveIcon />
+                          Saved
+                        </Link>
+                      </Button>
+                    </li>
+                  </>
                 )}
 
-                <li>
-                  <Button
-                    className="w-full justify-start"
-                    variant="ghost"
-                    asChild
-                    size="lg"
-                  >
-                    <Link href="/moodboard/create" onClick={handleNavigation}>
-                      <SparklesIcon />
-                      Moodboard
-                    </Link>
-                  </Button>
-                </li>
-
-                <Separator />
+                <Separator className="my-4" />
 
                 {navItems.map((item) => (
                   <NavItem

@@ -15,9 +15,7 @@ export default function Moodboard({
             <TrackSearch />
           </Suspense>
         </ViewTransition>
-        <ViewTransition>
-          <Suspense fallback={<TrackResultSkeleton />}>{children}</Suspense>
-        </ViewTransition>
+        <Suspense fallback={<TrackResultSkeleton />}>{children}</Suspense>
       </div>
     </main>
   );

@@ -8,6 +8,7 @@ import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { Toaster } from 'sonner';
 import './globals.css';
 
 const pretendard = localFont({
@@ -39,13 +40,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${pretendard.variable} ${lora.variable} font-sans antialiased min-h-screen flex flex-col`}
+        className={`${pretendard.variable} ${lora.variable} rounded-full font-sans antialiased min-h-screen flex flex-col`}
         style={{ fontFeatureSettings: "'ss01', 'ss02', 'ss08'" }}
       >
         <Suspense fallback={<Loading />}>
           <Header />
           {children}
         </Suspense>
+        <Toaster
+          richColors
+          toastOptions={{
+            style: {
+              borderRadius: 'calc(infinity * 1px)',
+            },
+          }}
+        />
       </body>
     </html>
   );
