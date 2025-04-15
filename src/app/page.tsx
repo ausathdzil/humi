@@ -1,5 +1,5 @@
-import { SignInButton } from '@/components/auth-button';
-import MoodboardExample from '@/components/moodboard-example';
+import { Moodboard, Theme } from '@/components/moodboard';
+import { SignInButton } from '@/components/auth-components';
 import TryHumiButton from '@/components/try-humi-button';
 import {
   Accordion,
@@ -324,5 +324,42 @@ function Footer() {
         </ul>
       </div>
     </footer>
+  );
+}
+
+function MoodboardExample() {
+  const track = {
+    name: 'blue',
+    artists: 'yung kai',
+    albumUrl:
+      'https://i.scdn.co/image/ab67616d0000b273373c63a4666fb7193febc167',
+  };
+
+  const moodTags = ['Dreamy', 'Chill', 'Relaxing', 'Soothing'];
+
+  const colors = [
+    '#90caf9',
+    '#64b5f6',
+    '#42a5f5',
+    '#2196f3',
+    '#1e88e5',
+    '#1565c0',
+  ];
+
+  const theme: Theme = {
+    background: '#e3f2fd',
+    text: { title: '#1565c0', artist: '#1e88e5' },
+    tag: { background: '#bbdefb', text: '#1565c0' },
+  };
+
+  return (
+    <Moodboard
+      title={track.name}
+      artists={track.artists}
+      albumCover={track.albumUrl}
+      moodTags={moodTags}
+      colors={colors}
+      theme={theme}
+    />
   );
 }

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { streamMoodboard } from '@/lib/actions';
-import { Track } from '@/lib/spotify.types';
+import { Track } from '@/lib/types';
 import { LoaderIcon, SparklesIcon } from 'lucide-react';
 import { useState } from 'react';
 

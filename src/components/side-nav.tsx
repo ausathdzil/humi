@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, SignOutButton } from '@/components/auth-button';
+import { SignInButton, SignOutButton } from '@/components/auth-components';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from '@/lib/auth-client';
@@ -35,7 +35,7 @@ const navItems = [
   },
 ];
 
-export default function SideNav() {
+export function SideNav() {
   const [isOpen, setIsOpen] = useState(false);
 
   const session = useSession();

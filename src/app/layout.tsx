@@ -1,5 +1,5 @@
-import { AuthInfo } from '@/components/auth-button';
-import SideNav from '@/components/side-nav';
+import { AuthInfo } from '@/components/auth-components';
+import { SideNav } from '@/components/side-nav';
 import { Button } from '@/components/ui/button';
 import { Loader, SparklesIcon } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -51,15 +51,7 @@ export default function RootLayout({
   );
 }
 
-function Loading() {
-  return (
-    <main className="grow bg-background flex items-center justify-center">
-      <Loader className="animate-spin" />
-    </main>
-  );
-}
-
-export function Header() {
+function Header() {
   return (
     <header className="sticky top-0 z-50 px-8 md:px-16 py-4 md:py-8 transition-all bg-background/90 backdrop-blur-sm">
       <nav className="flex items-center justify-between">
@@ -91,5 +83,13 @@ export function Header() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function Loading() {
+  return (
+    <main className="grow bg-background flex items-center justify-center">
+      <Loader className="animate-spin" />
+    </main>
   );
 }

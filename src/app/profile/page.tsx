@@ -1,11 +1,8 @@
-import {
-  RecentlyPlayedSkeleton,
-  TopTracksSkeleton
-} from '@/components/skeletons';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getAccessToken, getUser } from '@/db/data';
-import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify';
-import { SimplifiedArtist } from '@/lib/spotify.types';
+import { getRecentlyPlayed, getTopTracks } from '@/lib/data';
+import { SimplifiedArtist } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { unauthorized } from 'next/navigation';
@@ -133,6 +130,42 @@ async function TopTracks() {
             </CardContent>
           </Card>
         </Link>
+      ))}
+    </div>
+  );
+}
+
+function RecentlyPlayedSkeleton() {
+  return (
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="flex flex-col gap-2 px-6 py-6">
+          <div className="relative aspect-square rounded-md overflow-hidden ring-1 ring-border/50">
+            <Skeleton className="w-full h-full" />
+          </div>
+          <div>
+            <Skeleton className="h-5 w-full mb-1" />
+            <Skeleton className="h-4 w-3/4" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TopTracksSkeleton() {
+  return (
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="flex gap-4 px-6 py-6">
+          <div className="relative size-16 flex-shrink-0 rounded-sm overflow-hidden ring-1 ring-border/50">
+            <Skeleton className="w-full h-full" />
+          </div>
+          <div className="w-1/2 flex flex-col justify-center min-w-0">
+            <Skeleton className="h-6 w-full mb-1 lg:h-7" />
+            <Skeleton className="h-4 w-3/4 lg:h-5" />
+          </div>
+        </div>
       ))}
     </div>
   );

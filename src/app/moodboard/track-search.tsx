@@ -1,10 +1,11 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
-export default function TrackSearch() {
+export function TrackSearch() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -32,6 +33,16 @@ export default function TrackSearch() {
         onChange={(e) => handleSearch(e.target.value)}
         defaultValue={searchParams.get('q') ?? ''}
       />
+    </div>
+  );
+}
+
+export function TrackSearchSkeleton() {
+  return (
+    <div className="w-full flex justify-center">
+      <div className="h-10 max-w-[500px] w-full">
+        <Skeleton className="w-full h-full" />
+      </div>
     </div>
   );
 }

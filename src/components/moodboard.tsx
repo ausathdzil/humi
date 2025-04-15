@@ -73,12 +73,11 @@ export function Moodboard({
             {moodTags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold hover:scale-105 transition-transform duration-200 border-2"
+                className="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold hover:scale-105 transition-transform duration-200"
                 style={{
                   backgroundColor:
                     theme.tag?.background || 'rgba(255, 255, 255, 0.1)',
                   color: theme.tag?.text || theme.text.title,
-                  borderColor: theme.background,
                 }}
               >
                 {tag}
@@ -105,22 +104,24 @@ export function Moodboard({
 
 export function MoodboardSkeleton() {
   return (
-    <div className="w-full max-w-[600px] space-y-4">
-      <div className="flex items-center gap-3 sm:gap-4">
-        <Skeleton className="size-16 sm:size-24 rounded-2xl" />
-        <div className="flex-1 space-y-2">
-          <Skeleton className="h-6 sm:h-8 w-3/4" />
-          <Skeleton className="h-4 sm:h-5 w-1/2" />
+    <div className="w-full max-w-[600px]">
+      <div className="p-6">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="size-16 sm:size-24 rounded-2xl relative overflow-hidden">
+            <Skeleton className="w-full h-full" />
+          </div>
+          <div className="flex-1">
+            <Skeleton className="h-6 sm:h-8 w-3/4 mb-2" />
+            <Skeleton className="h-4 sm:h-5 w-1/2" />
+          </div>
         </div>
       </div>
-
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-2">
+      <div className="px-6 pb-6">
+        <div className="flex flex-wrap gap-2 mb-4">
           {[...Array(4)].map((_, i) => (
             <Skeleton key={i} className="h-6 w-20 rounded-full" />
           ))}
         </div>
-
         <div className="flex flex-wrap gap-2">
           {[...Array(5)].map((_, i) => (
             <Skeleton key={i} className="size-8 sm:size-10 rounded-2xl" />

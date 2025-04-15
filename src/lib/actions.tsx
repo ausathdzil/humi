@@ -23,7 +23,7 @@ export async function streamMoodboard(formData: FormData) {
     releaseDate: formData.get('releaseDate') as string,
     popularity: Number(formData.get('popularity')),
   };
-  
+
   const validatedFields = StreamMoodboardSchema.safeParse(rawFormData);
 
   if (!validatedFields.success) {

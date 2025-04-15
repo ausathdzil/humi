@@ -1,12 +1,8 @@
+import { RecentlyPlayedResponse, TopTracksResponse, Track } from '@/lib/types';
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from 'next/cache';
-import {
-  RecentlyPlayedResponse,
-  TopTracksResponse,
-  Track,
-} from './spotify.types';
 
 async function getClientAccessToken(): Promise<string> {
   const res = await fetch('https://accounts.spotify.com/api/token', {
