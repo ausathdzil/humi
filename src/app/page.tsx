@@ -1,4 +1,4 @@
-import { Moodboard, Theme } from '@/components/moodboard';
+import { Moodboard, Theme } from '@/app/moodboard/create/moodboard';
 import { SignInButton } from '@/components/auth-components';
 import TryHumiButton from '@/components/try-humi-button';
 import {
