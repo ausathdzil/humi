@@ -1,8 +1,12 @@
 import { db } from '@/db';
-import { account, user } from '@/db/schema';
+import { account, moodboard, user } from '@/db/schema';
 import { getSession } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { cache } from 'react';
+import {
+  unstable_cacheLife as cacheLife,
+  unstable_cacheTag as cacheTag,
+} from 'next/cache';
 
 export const getUser = cache(async () => {
   const session = await getSession();
@@ -75,3 +79,28 @@ export const getAccessToken = cache(async (userId: string) => {
 
   return user[0].accessToken;
 });
+
+export const getUserMoodboards = async (userId: string) => {
+  'use cache';
+
+  cacheLife('hours');
+  cacheTag(`moodboards:${userId}`);
+
+  const data = await db
+    .select()
+    .from(moodboard)
+    .where(eq(moodboard.userId, userId));
+
+  return data;
+};
+
+export const getMoodboard = async (id: string) => {
+  'use cache';
+
+  cacheLife('hours');
+  cacheTag(`moodboard:${id}`);
+
+  const data = await db.select().from(moodboard).where(eq(moodboard.id, id));
+
+  return data[0];
+};

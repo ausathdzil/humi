@@ -86,12 +86,10 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
   }
 
   return (
-    <>
+    <div className="w-full flex flex-col gap-4 items-center justify-end">
       <TrackResult track={track} />
-      <div className="w-full flex flex-col gap-4 items-center justify-center">
-        <MoodboardForm track={track} />
-      </div>
-    </>
+      <MoodboardForm track={track} />
+    </div>
   );
 }
 

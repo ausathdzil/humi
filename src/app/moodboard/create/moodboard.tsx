@@ -1,11 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { saveMoodboard } from '@/db/action';
 import { generateMoodboard } from '@/lib/actions';
+import { useSession } from '@/lib/auth-client';
 import { Track } from '@/lib/types';
-import { LoaderIcon, SparklesIcon } from 'lucide-react';
+import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
 export type Theme = {
   background: string;
@@ -50,28 +52,41 @@ export function MoodboardForm({ track }: { track: Track }) {
           const result = await generateMoodboard(formData);
           if (result) {
             setMoodboardData(result);
+            console.log(result);
           }
           setIsLoading(false);
         }}
       >
-        <Button type="submit" size="lg" disabled={isLoading}>
-          {isLoading ? (
-            <LoaderIcon className="animate-spin" />
-          ) : (
-            <SparklesIcon />
-          )}
-          Generate Moodboard
-        </Button>
+        {!moodboardData && (
+          <Button type="submit" size="lg" disabled={isLoading}>
+            {isLoading ? (
+              <LoaderIcon className="animate-spin" />
+            ) : (
+              <SparklesIcon />
+            )}
+            Generate Moodboard
+          </Button>
+        )}
       </form>
       {moodboardData && (
-        <Moodboard
-          title={title}
-          artists={artists}
-          albumCover={albumCover}
-          moodTags={moodboardData.moodTags}
-          colors={moodboardData.colors}
-          theme={moodboardData.theme}
-        />
+        <div className="space-y-4">
+          <Moodboard
+            title={title}
+            artists={artists}
+            albumCover={albumCover}
+            moodTags={moodboardData.moodTags}
+            colors={moodboardData.colors}
+            theme={moodboardData.theme}
+          />
+          <div className="flex justify-end">
+            <SaveMoodboard
+              trackId={track.id}
+              colors={moodboardData.colors}
+              moodTags={moodboardData.moodTags}
+              theme={moodboardData.theme}
+            />
+          </div>
+        </div>
       )}
     </>
   );
@@ -163,6 +178,46 @@ export function Moodboard({
         </div>
       </div>
     </div>
+  );
+}
+
+function SaveMoodboard({
+  trackId,
+  colors,
+  moodTags,
+  theme,
+}: {
+  trackId: string;
+  colors: string[];
+  moodTags: string[];
+  theme: Theme;
+}) {
+  const [isPending, startTransition] = useTransition();
+
+  const session = useSession();
+  if (!session.data || !session.data.user) {
+    return null;
+  }
+
+  const user = session.data.user;
+  const saveMoodboardWithUserId = saveMoodboard.bind(null, user.id);
+  const handleAction = async (formData: FormData) => {
+    startTransition(() => {
+      saveMoodboardWithUserId(formData);
+    });
+  };
+
+  return (
+    <form action={handleAction}>
+      <input type="hidden" name="trackId" value={trackId} />
+      <input type="hidden" name="colors" value={colors} />
+      <input type="hidden" name="moodTags" value={moodTags} />
+      <input type="hidden" name="theme" value={JSON.stringify(theme)} />
+      <Button type="submit" disabled={isPending}>
+        {isPending ? <LoaderIcon className="animate-spin" /> : <SaveIcon />}
+        Save Moodboard
+      </Button>
+    </form>
   );
 }
 

@@ -1,4 +1,5 @@
-import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, jsonb, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { nanoid } from 'nanoid';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -50,5 +51,25 @@ export const verification = pgTable('verification', {
   updatedAt: timestamp('updated_at'),
 });
 
+export const moodboard = pgTable('moodbdoard', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => nanoid(8)),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  trackId: text('track_id').notNull(),
+  colors: text('colors').array(),
+  moodTags: text('mood_tags').array(),
+  theme: jsonb('theme'),
+  createdAt: timestamp('created_at')
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: timestamp('updated_at')
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
 export type User = typeof user.$inferSelect;
 export type Account = typeof account.$inferSelect;
+export type Moodboard = typeof moodboard.$inferSelect;
