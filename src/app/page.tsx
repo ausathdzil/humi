@@ -118,8 +118,8 @@ export default function Home() {
             <article className="space-y-4">
               <h2 className="font-bold text-2xl">Color Palette</h2>
               <p className="font-semibold">
-                Generate a color palette that visually represents the mood and
-                energy of your music.
+                Generate a color palette that visually represents the mood of
+                your music.
               </p>
             </article>
           </div>
@@ -234,6 +234,14 @@ function Footer() {
                 About
               </Link>
             </li>
+            <li>
+              <Link
+                className="hover:text-primary-foreground transition-colors"
+                href="/faqs"
+              >
+                FAQs
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
@@ -294,7 +302,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              X
+              X (Twitter)
             </a>
           </li>
         </ul>

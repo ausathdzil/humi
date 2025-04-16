@@ -21,3 +21,8 @@ export function extractSpotifyTrackId(input: string): string | null {
   const match = input.match(spotifyTrackRegex);
   return match ? match[1] : null;
 }
+
+export const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://humi.ausathikram.com';

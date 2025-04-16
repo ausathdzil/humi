@@ -68,7 +68,7 @@ function Header() {
           <li>
             <Link
               aria-label="Home"
-              className="hover:text-primary transition-colors flex items-center gap-2 font-bold text-xl sm:text-2xl"
+              className="hover:text-primary transition-colors flex items-center gap-3 font-bold text-xl sm:text-2xl"
               href="/"
             >
               <Image src="/humi.svg" alt="Humi Logo" width={28} height={28} />
