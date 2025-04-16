@@ -330,7 +330,7 @@ function Footer() {
 function MoodboardExample() {
   const track = {
     name: 'blue',
-    artists: 'yung kai',
+    artists: ['yung kai'],
     albumUrl:
       'https://i.scdn.co/image/ab67616d0000b273373c63a4666fb7193febc167',
   };

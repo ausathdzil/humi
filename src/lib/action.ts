@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 const GenerateMoodboardSchema = z.object({
   title: z.string(),
-  artists: z.string(),
+  artists: z.array(z.string()),
   albumCover: z.string(),
   duration: z.number(),
   releaseDate: z.string(),
@@ -32,7 +32,7 @@ export type MoodboardData = {
 export async function generateMoodboard(formData: FormData) {
   const rawFormData = {
     title: formData.get('title') as string,
-    artists: formData.get('artists') as string,
+    artists: (formData.get('artists') as string).split(','),
     albumCover: formData.get('albumCover') as string,
     duration: Number(formData.get('duration')),
     releaseDate: formData.get('releaseDate') as string,

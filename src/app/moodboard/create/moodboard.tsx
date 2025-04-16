@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { saveMoodboard } from '@/db/action';
-import { generateMoodboard } from '@/lib/actions';
+import { generateMoodboard } from '@/lib/action';
 import { useSession } from '@/lib/auth-client';
 import { Track } from '@/lib/types';
 import { Session } from 'better-auth';
@@ -32,7 +32,7 @@ export function MoodboardForm({ track }: { track: Track }) {
   const session = useSession();
 
   const title = track.name;
-  const artists = track.artists.map((artist) => artist.name).join(', ');
+  const artists = track.artists.map((artist) => artist.name);
   const albumCover = track.album.images[0].url;
   const duration = track.duration_ms;
   const releaseDate = track.album.release_date;
@@ -47,7 +47,7 @@ export function MoodboardForm({ track }: { track: Track }) {
 
           const formData = new FormData();
           formData.append('title', title);
-          formData.append('artists', artists);
+          formData.append('artists', artists.join(','));
           formData.append('albumCover', albumCover);
           formData.append('duration', duration.toString());
           formData.append('releaseDate', releaseDate);
@@ -56,7 +56,6 @@ export function MoodboardForm({ track }: { track: Track }) {
           const result = await generateMoodboard(formData);
           if (result) {
             setMoodboardData(result);
-            console.log(result);
           }
           setIsLoading(false);
         }}
@@ -73,7 +72,7 @@ export function MoodboardForm({ track }: { track: Track }) {
         )}
       </form>
       {moodboardData && (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4  items-center justify-center">
           <Moodboard
             title={title}
             artists={artists}
@@ -82,15 +81,16 @@ export function MoodboardForm({ track }: { track: Track }) {
             colors={moodboardData.colors}
             theme={moodboardData.theme}
           />
-          <div className="flex justify-end">
-            <SaveMoodboard
-              session={session.data ? session.data.session : null}
-              trackId={track.id}
-              colors={moodboardData.colors}
-              moodTags={moodboardData.moodTags}
-              theme={moodboardData.theme}
-            />
-          </div>
+          <SaveMoodboard
+            session={session.data ? session.data.session : null}
+            trackId={track.id}
+            title={title}
+            artists={artists}
+            albumCover={albumCover}
+            colors={moodboardData.colors}
+            moodTags={moodboardData.moodTags}
+            theme={moodboardData.theme}
+          />
         </div>
       )}
     </>
@@ -99,7 +99,7 @@ export function MoodboardForm({ track }: { track: Track }) {
 
 interface MoodboardProps {
   title: string;
-  artists: string;
+  artists: string[];
   albumCover: string;
   moodTags: string[];
   colors: string[];
@@ -140,7 +140,7 @@ export function Moodboard(props: MoodboardProps) {
               className="font-semibold text-base sm:text-lg"
               style={{ color: theme.text.artist }}
             >
-              {artists}
+              {artists.join(', ')}
             </p>
           </div>
         </div>
@@ -186,13 +186,25 @@ export function Moodboard(props: MoodboardProps) {
 interface SaveMoodboardProps {
   session: Session | null;
   trackId: string;
+  title: string;
+  artists: string[];
+  albumCover: string;
   colors: string[];
   moodTags: string[];
   theme: Theme;
 }
 
 function SaveMoodboard(props: SaveMoodboardProps) {
-  const { session, trackId, colors, moodTags, theme } = props;
+  const {
+    title,
+    artists,
+    albumCover,
+    session,
+    trackId,
+    colors,
+    moodTags,
+    theme,
+  } = props;
 
   const saveMoodboardWithUserId = saveMoodboard.bind(null, session?.userId);
   const [state, formAction, isPending] = useActionState(
@@ -204,56 +216,33 @@ function SaveMoodboard(props: SaveMoodboardProps) {
     if (state && state.message) {
       if (state.success) {
         toast.success(state.message, {
-          position: 'top-center',
+          position: 'bottom-center',
         });
       } else {
         toast.error(state.message, {
-          position: 'top-center',
+          position: 'bottom-center',
         });
       }
     }
   }, [state]);
 
+  if (!session) {
+    return null;
+  }
+
   return (
     <form action={formAction}>
       <input type="hidden" name="trackId" value={trackId} />
+      <input type="hidden" name="title" value={title} />
+      <input type="hidden" name="artists" value={artists} />
+      <input type="hidden" name="albumCover" value={albumCover} />
       <input type="hidden" name="colors" value={colors} />
       <input type="hidden" name="moodTags" value={moodTags} />
       <input type="hidden" name="theme" value={JSON.stringify(theme)} />
-      <Button type="submit" disabled={isPending || !session}>
+      <Button variant="ghost" type="submit" disabled={isPending}>
         {isPending ? <LoaderIcon className="animate-spin" /> : <SaveIcon />}
         Save Moodboard
       </Button>
     </form>
   );
 }
-
-// export function MoodboardSkeleton() {
-//   return (
-//     <div className="w-full max-w-[600px]">
-//       <div className="p-6">
-//         <div className="flex items-center gap-3 sm:gap-4">
-//           <div className="size-16 sm:size-24 rounded-2xl relative overflow-hidden">
-//             <Skeleton className="w-full h-full" />
-//           </div>
-//           <div className="flex-1">
-//             <Skeleton className="h-6 sm:h-8 w-3/4 mb-2" />
-//             <Skeleton className="h-4 sm:h-5 w-1/2" />
-//           </div>
-//         </div>
-//       </div>
-//       <div className="px-6 pb-6">
-//         <div className="flex flex-wrap gap-2 mb-4">
-//           {[...Array(4)].map((_, i) => (
-//             <Skeleton key={i} className="h-6 w-20 rounded-full" />
-//           ))}
-//         </div>
-//         <div className="flex flex-wrap gap-2">
-//           {[...Array(5)].map((_, i) => (
-//             <Skeleton key={i} className="size-8 sm:size-10 rounded-2xl" />
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

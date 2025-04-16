@@ -67,7 +67,7 @@ export function SideNav() {
         </Button>
       </Drawer.Trigger>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 z-55 bg-muted-foreground/60" />
+        <Drawer.Overlay className="fixed inset-0 z-55 bg-black/40" />
         <Drawer.Content
           className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[240px] sm:w-[310px] flex"
           style={
@@ -111,10 +111,11 @@ export function SideNav() {
                         </Link>
                       </Button>
                     </li>
+                    
+                    <Separator className="my-4" />
                   </>
                 )}
 
-                <Separator className="my-4" />
 
                 {navItems.map((item) => (
                   <NavItem
