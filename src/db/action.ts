@@ -84,6 +84,7 @@ export async function saveMoodboard(
   }
 
   revalidateTag(`moodboards:${userId}`);
+  revalidatePath('/profile/moodboards');
 
   return {
     success: true,

@@ -1,27 +1,35 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { RecentlyPlayedResponse, TopTracksResponse, Track } from '@/lib/types';
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from 'next/cache';
 
-async function getClientAccessToken(): Promise<string> {
-  const res = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization:
-        'Basic ' +
-        Buffer.from(
-          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-        ).toString('base64'),
-    },
-    body: new URLSearchParams({
-      grant_type: 'client_credentials',
-    }).toString(),
-  });
+async function getClientAccessToken(): Promise<string | null> {
+  try {
+    const res = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization:
+          'Basic ' +
+          Buffer.from(
+            `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+          ).toString('base64'),
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+      }).toString(),
+    });
 
-  const data = await res.json();
-  return data.access_token;
+    if (!res.ok) throw new Error('Failed to fetch client access token');
+
+    const data = await res.json();
+    return data.access_token;
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function getTrack(
@@ -35,6 +43,8 @@ export async function getTrack(
 
   const token = accessToken || (await getClientAccessToken());
 
+  if (!token) return null;
+
   try {
     const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
       headers: {
@@ -46,7 +56,6 @@ export async function getTrack(
 
     const data = await res.json();
     return data;
-    /* eslint-disable @typescript-eslint/no-unused-vars */
   } catch (error) {
     return null;
   }

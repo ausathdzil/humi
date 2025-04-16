@@ -115,7 +115,7 @@ async function Moodboards() {
 function MoodboardSkeleton() {
   return (
     <div className="w-full max-w-7xl flex flex-wrap justify-center gap-8">
-      {Array.from({ length: 4 }).map((_, index) => (
+      {Array.from({ length: 2 }).map((_, index) => (
         <div key={index} className="w-full max-w-[600px]">
           <div className="p-6">
             <div className="flex items-center gap-3 sm:gap-4">

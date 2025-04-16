@@ -23,20 +23,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
         <h1 className="text-xl sm:text-3xl font-bold text-muted-foreground">
           Generate a Moodboard
         </h1>
-        <p className="text-sm sm:text-lg max-w-md font-semibold text-muted-foreground text-center">
-          Enter a Spotify track URL or ID in the search bar above to generate a
-          moodboard.
-          <br />
-          <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
-            https://open.spotify.com/track/2LlOeW5rVcvl3QcPNPcDus
-          </code>
-          <span className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm text-muted-foreground">
-            or
-          </span>
-          <code className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
-            2LlOeW5rVcvl3QcPNPcDus
-          </code>
-        </p>
+        <Example />
       </div>
     );
   }
@@ -50,20 +37,7 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
         <h1 className="text-xl sm:text-3xl font-bold text-warning">
           Invalid Spotify Track
         </h1>
-        <p className="text-sm sm:text-lg font-semibold max-w-md text-muted-foreground text-center">
-          Please provide a valid Spotify track URL or ID. The URL should look
-          like:
-          <br />
-          <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
-            https://open.spotify.com/track/2LlOeW5rVcvl3QcPNPcDus
-          </code>
-          <span className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm text-muted-foreground">
-            or
-          </span>
-          <code className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
-            2LlOeW5rVcvl3QcPNPcDus
-          </code>
-        </p>
+        <Example />
       </div>
     );
   }
@@ -78,9 +52,9 @@ export default async function CreateMoodboard(props: CreateMoodboardProps) {
           Track Not Found
         </h1>
         <p className="text-sm sm:text-lg font-semibold max-w-md text-muted-foreground text-center">
-          We couldn&apos;t find the track you&apos;re looking for. Please make
-          sure the Spotify track URL or ID is correct and try again.
+          Please make sure the Spotify track URL or ID is correct and try again.
         </p>
+        <Example />
       </div>
     );
   }
@@ -119,5 +93,35 @@ function TrackResult({ track }: { track: Track }) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function Example() {
+  return (
+    <article className="text-center space-y-4 font-semibold text-muted-foreground text-xs sm:text-base max-w-md">
+      <p>Enter a Spotify track URL or ID in the search bar above.</p>
+      <p>
+        <code className="mt-1 sm:mt-2 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
+          https://open.spotify.com/track/2LlOeW5rVcvl3QcPNPcDus
+        </code>
+        <span className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm text-muted-foreground">
+          or
+        </span>
+        <code className="mt-0.5 sm:mt-1 block text-[9px] sm:text-sm bg-muted px-1.5 py-1 sm:p-2 rounded-md overflow-hidden text-ellipsis whitespace-nowrap w-full">
+          2LlOeW5rVcvl3QcPNPcDus
+        </code>
+      </p>
+      <p className="text-xs">
+        API provided by{' '}
+        <a
+          href="https://developer.spotify.com/documentation/web-api/"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Spotify
+        </a>
+      </p>
+    </article>
   );
 }
