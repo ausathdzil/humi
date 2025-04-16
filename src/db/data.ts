@@ -104,3 +104,13 @@ export const getMoodboard = async (id: string) => {
 
   return data[0];
 };
+
+export const getPublicUser = async (id: string) => {
+  'use cache';
+
+  cacheLife('hours');
+
+  const data = await db.select().from(user).where(eq(user.id, id));
+
+  return data[0];
+};

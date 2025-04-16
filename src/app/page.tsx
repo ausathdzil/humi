@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <>
       <main className="grow flex flex-col bg-background">
-        <div className="px-8 md:px-16 py-16 md:py-24 flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-16">
+        <div className="px-8 md:px-16 py-16 flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-16">
           <div className="w-full md:max-w-1/2 flex flex-col items-center lg:items-start gap-8">
             <article className="space-y-4 text-center lg:text-left">
               <h1 className="font-bold text-3xl lg:text-6xl">

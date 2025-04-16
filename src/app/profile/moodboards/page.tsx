@@ -124,7 +124,7 @@ function CTA({ userId, id }: { userId: string; id: string }) {
   );
 }
 
-function MoodboardSkeleton() {
+export function MoodboardSkeleton() {
   return (
     <div className="w-full max-w-7xl flex flex-wrap justify-center gap-8">
       <div className="w-full max-w-[600px]">
