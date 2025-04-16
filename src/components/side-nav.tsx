@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import {
   ArchiveIcon,
   HelpCircleIcon,
@@ -15,7 +16,7 @@ import {
   UserRoundIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Drawer } from 'vaul';
 
 const navItems = [
@@ -43,9 +44,7 @@ const navItems = [
 
 export function SideNav() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const session = useSession();
-  const user = session.data?.user;
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsOpen(open);
@@ -55,9 +54,22 @@ export function SideNav() {
     setIsOpen(false);
   }, []);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 425);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const session = useSession();
+  const user = session.data?.user;
+
   return (
     <Drawer.Root
-      direction="right"
+      direction={isMobile ? 'bottom' : 'right'}
       open={isOpen}
       onOpenChange={handleOpenChange}
     >
@@ -69,7 +81,10 @@ export function SideNav() {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-55 bg-black/40" />
         <Drawer.Content
-          className="right-2 top-2 bottom-2 fixed z-60 outline-none w-[240px] sm:w-[310px] flex"
+          className={cn(
+            'sm:right-2 sm:top-2 bottom-2 fixed z-60 outline-none w-[240px] sm:w-[310px] flex',
+            isMobile && 'w-full p-2'
+          )}
           style={
             { '--initial-transform': 'calc(100% + 8px)' } as React.CSSProperties
           }
@@ -78,7 +93,7 @@ export function SideNav() {
             <div className="max-w-md mx-auto">
               <Drawer.Title className="font-bold mb-2">Humi</Drawer.Title>
             </div>
-            <div className="grow flex flex-col">
+            <div className="grow flex flex-col gap-4">
               <ul className="space-y-2">
                 {user && (
                   <>
@@ -111,11 +126,10 @@ export function SideNav() {
                         </Link>
                       </Button>
                     </li>
-                    
+
                     <Separator className="my-4" />
                   </>
                 )}
-
 
                 {navItems.map((item) => (
                   <NavItem
