@@ -5,12 +5,12 @@ import { saveMoodboard } from '@/db/action';
 import { generateMoodboard } from '@/lib/action';
 import { useSession } from '@/lib/auth-client';
 import { Track } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useActionState, useEffect, useState } from 'react';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 
 export interface Theme {
   background: string;
@@ -251,15 +251,22 @@ function SaveMoodboard(props: SaveMoodboardProps) {
     null
   );
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    startTransition(() => formAction(new FormData(e.currentTarget)));
+  };
+
   useEffect(() => {
     if (state && state.message) {
       if (state.success) {
         toast.success(state.message, {
           position: 'bottom-center',
+          duration: 3000,
         });
       } else {
         toast.error(state.message, {
           position: 'bottom-center',
+          duration: 3000,
         });
       }
     }
@@ -270,7 +277,7 @@ function SaveMoodboard(props: SaveMoodboardProps) {
   }
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
       <input type="hidden" name="trackId" value={trackId} />
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="artists" value={artists} />
