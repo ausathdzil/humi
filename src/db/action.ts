@@ -30,13 +30,12 @@ const SaveMoodboardSchema = z.object({
 
 export async function saveMoodboard(
   userId: string | undefined,
-  prevState: any,
   formData: FormData
 ) {
   if (!userId) {
     return {
       success: false,
-      error: 'Unauthorized',
+      message: 'Unauthorized',
     };
   }
 
@@ -104,7 +103,7 @@ export async function deleteMoodboard(
   if (!userId) {
     return {
       success: false,
-      error: 'Unauthorized',
+      message: 'Unauthorized',
     };
   }
 
@@ -117,7 +116,7 @@ export async function deleteMoodboard(
   if (!validatedFields.success) {
     return {
       success: false,
-      error: 'Invalid moodboard ID',
+      message: 'Invalid moodboard ID',
     };
   }
 

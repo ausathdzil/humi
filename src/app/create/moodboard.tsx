@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { startTransition, useActionState, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export interface Theme {
@@ -245,32 +245,38 @@ function SaveMoodboard(props: SaveMoodboardProps) {
     theme,
   } = props;
 
+  const [isPending, setIsPending] = useState(false);
   const saveMoodboardWithUserId = saveMoodboard.bind(null, session?.userId);
-  const [state, formAction, isPending] = useActionState(
-    saveMoodboardWithUserId,
-    null
-  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    startTransition(() => formAction(new FormData(e.currentTarget)));
-  };
+    setIsPending(true);
 
-  useEffect(() => {
-    if (state && state.message) {
-      if (state.success) {
-        toast.success(state.message, {
+    const formData = new FormData(e.currentTarget);
+    try {
+      const result = await saveMoodboardWithUserId(formData);
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      toast.success(result.message, {
+        position: 'bottom-center',
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message, {
           position: 'bottom-center',
-          duration: 3000,
         });
       } else {
-        toast.error(state.message, {
+        toast.error('An unknown error occurred', {
           position: 'bottom-center',
-          duration: 3000,
         });
       }
+    } finally {
+      setIsPending(false);
     }
-  }, [state]);
+  };
 
   if (!session) {
     return null;

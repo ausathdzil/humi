@@ -19,18 +19,16 @@ import { getSession } from '@/lib/auth';
 import { SparklesIcon, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
 import { unauthorized } from 'next/navigation';
-import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
+import { Suspense } from 'react';
 
 export default function ProfileMoodboard() {
   return (
     <main className="grow bg-background">
       <div className="p-8 flex flex-col items-center justify-center gap-8">
         <h1 className="text-2xl text-primary font-bold">My Moodboards</h1>
-        <ViewTransition>
-          <Suspense fallback={<MoodboardSkeleton />}>
-            <Moodboards />
-          </Suspense>
-        </ViewTransition>
+        <Suspense fallback={<MoodboardSkeleton />}>
+          <Moodboards />
+        </Suspense>
       </div>
     </main>
   );
@@ -50,7 +48,9 @@ async function Moodboards() {
       <div className="flex flex-col items-center gap-4">
         <div className="text-center text-muted-foreground font-semibold">
           <p className="text-lg">No moodboards saved yet</p>
-          <p className="text-sm">Create your first moodboard to see it here</p>
+          <p className="text-sm">
+            Create your first moodboard and save it to see it here
+          </p>
         </div>
         <Button asChild size="lg">
           <Link href="/create">
