@@ -20,65 +20,67 @@ export const getUser = cache(async () => {
   return data[0];
 });
 
-export const getAccessToken = cache(async (userId: string) => {
-  const user = await db
-    .select({
-      accessToken: account.accessToken,
-      accessTokenExpiresAt: account.accessTokenExpiresAt,
-      refreshToken: account.refreshToken,
-    })
-    .from(account)
-    .where(eq(account.userId, userId));
-
-  if (!user.length) {
-    throw new Error('No account found for user');
-  }
-
-  if (
-    !user[0].accessToken ||
-    !user[0].accessTokenExpiresAt ||
-    !user[0].refreshToken
-  ) {
-    throw new Error('Missing required token fields');
-  }
-
-  const isExpired = user[0].accessTokenExpiresAt < new Date();
-
-  if (isExpired) {
-    const res = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${Buffer.from(
-          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-        ).toString('base64')}`,
-      },
-      body: new URLSearchParams({
-        grant_type: 'refresh_token',
-        refresh_token: user[0].refreshToken,
-      }).toString(),
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to refresh access token');
-    }
-
-    const data = await res.json();
-
-    await db
-      .update(account)
-      .set({
-        accessToken: data.access_token,
-        accessTokenExpiresAt: data.expires_in,
-        refreshToken: data.refresh_token || user[0].refreshToken,
+export const getAccessToken = cache(
+  async (userId: string): Promise<string | null> => {
+    const user = await db
+      .select({
+        accessToken: account.accessToken,
+        accessTokenExpiresAt: account.accessTokenExpiresAt,
+        refreshToken: account.refreshToken,
       })
+      .from(account)
       .where(eq(account.userId, userId));
 
-    return data.access_token;
-  }
+    if (!user.length) {
+      throw new Error('No account found for user');
+    }
 
-  return user[0].accessToken;
-});
+    if (
+      !user[0].accessToken ||
+      !user[0].accessTokenExpiresAt ||
+      !user[0].refreshToken
+    ) {
+      return null;
+    }
+
+    const isExpired = user[0].accessTokenExpiresAt < new Date();
+
+    if (isExpired) {
+      const res = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Basic ${Buffer.from(
+            `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+          ).toString('base64')}`,
+        },
+        body: new URLSearchParams({
+          grant_type: 'refresh_token',
+          refresh_token: user[0].refreshToken,
+        }).toString(),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to refresh access token');
+      }
+
+      const data = await res.json();
+
+      await db
+        .update(account)
+        .set({
+          accessToken: data.access_token,
+          accessTokenExpiresAt: data.expires_in,
+          refreshToken: data.refresh_token || user[0].refreshToken,
+        })
+        .where(eq(account.userId, userId));
+
+      return data.access_token;
+    }
+
+    return user[0].accessToken;
+  }
+);
 
 export const getUserMoodboards = async (userId: string) => {
   'use cache';

@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils';
 import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -246,7 +245,6 @@ function SaveMoodboard(props: SaveMoodboardProps) {
     theme,
   } = props;
 
-  const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const saveMoodboardWithUserId = saveMoodboard.bind(null, session?.userId);
 
@@ -265,8 +263,6 @@ function SaveMoodboard(props: SaveMoodboardProps) {
       toast.success(result.message, {
         position: 'bottom-center',
       });
-
-      router.push('/profile/moodboards');
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message, {

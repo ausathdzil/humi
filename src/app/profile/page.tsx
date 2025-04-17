@@ -53,6 +53,15 @@ async function RecentlyPlayed() {
   }
 
   const accessToken = await getAccessToken(user.id);
+
+  if (!accessToken) {
+    return (
+      <p className="text-muted-foreground text-center">
+        Sign in with Spotify to see your recently played tracks
+      </p>
+    );
+  }
+
   const recentlyPlayed = await getRecentlyPlayed(accessToken);
 
   return (
@@ -97,6 +106,15 @@ async function TopTracks() {
   }
 
   const accessToken = await getAccessToken(user.id);
+
+  if (!accessToken) {
+    return (
+      <p className="text-muted-foreground text-center">
+        Sign in with Spotify to see your top tracks
+      </p>
+    );
+  }
+
   const topTracks = await getTopTracks(accessToken);
 
   return (
