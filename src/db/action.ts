@@ -5,7 +5,7 @@
 import { db } from '@/db';
 import { moodboard } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { z } from 'zod';
 
 const SaveMoodboardSchema = z.object({
@@ -83,7 +83,6 @@ export async function saveMoodboard(
   }
 
   revalidateTag(`moodboards:${userId}`);
-  revalidatePath('/profile/moodboards');
 
   return {
     success: true,
@@ -135,7 +134,6 @@ export async function deleteMoodboard(
   }
 
   revalidateTag(`moodboards:${userId}`);
-  revalidatePath('/profile/moodboards');
 
   return {
     success: true,
