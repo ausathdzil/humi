@@ -1,6 +1,6 @@
 import { db } from '@/db';
 import { account, moodboard, user } from '@/db/schema';
-import { getSession } from '@/lib/auth';
+import { getSession } from '@/lib/better-auth/auth';
 import { eq, desc } from 'drizzle-orm';
 import { cache } from 'react';
 import {

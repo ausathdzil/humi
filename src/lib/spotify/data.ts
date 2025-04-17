@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { RecentlyPlayedResponse, TopTracksResponse, Track } from '@/lib/types';
+import {
+  RecentlyPlayedResponse,
+  TopTracksResponse,
+  Track,
+} from '@/lib/spotify/types';
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,

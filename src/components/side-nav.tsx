@@ -4,7 +4,7 @@ import { SignInButton, SignOutButton } from '@/components/auth-components';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { useSession } from '@/lib/auth-client';
+import { useSession } from '@/lib/better-auth/auth-client';
 import { cn } from '@/lib/utils';
 import {
   ArchiveIcon,

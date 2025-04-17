@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getUserMoodboards } from '@/db/data';
-import { getSession } from '@/lib/auth';
+import { getSession } from '@/lib/better-auth/auth';
 import { SparklesIcon, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
 import { unauthorized } from 'next/navigation';

@@ -1,8 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getAccessToken, getUser } from '@/db/data';
-import { getRecentlyPlayed, getTopTracks } from '@/lib/data';
-import { SimplifiedArtist } from '@/lib/types';
+import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify/data';
+import { SimplifiedArtist } from '@/lib/spotify/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { unauthorized } from 'next/navigation';

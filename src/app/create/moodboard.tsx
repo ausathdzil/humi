@@ -2,9 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import { saveMoodboard } from '@/db/action';
-import { generateMoodboard } from '@/lib/action';
-import { useSession } from '@/lib/auth-client';
-import { Track } from '@/lib/types';
+import { generateMoodboard } from '@/lib/actions/moodboard';
+import { useSession } from '@/lib/better-auth/auth-client';
+import { Track } from '@/lib/spotify/types';
 import { cn } from '@/lib/utils';
 import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';

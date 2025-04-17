@@ -1,7 +1,7 @@
 import { MoodboardForm } from '@/app/create/moodboard';
 import { Card, CardContent } from '@/components/ui/card';
-import { getTrack } from '@/lib/data';
-import { Track } from '@/lib/types';
+import { getTrack } from '@/lib/spotify/data';
+import { Track } from '@/lib/spotify/types';
 import { extractSpotifyTrackId } from '@/lib/utils';
 import { AlertCircle, Disc3 } from 'lucide-react';
 import Image from 'next/image';

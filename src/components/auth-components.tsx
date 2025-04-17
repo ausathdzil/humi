@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { signIn, signOut, useSession } from '@/lib/auth-client';
+import { signIn, signOut, useSession } from '@/lib/better-auth/auth-client';
 import { LoaderIcon, LogOutIcon, UserRoundIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
