@@ -30,6 +30,7 @@ const SaveMoodboardSchema = z.object({
 
 export async function saveMoodboard(
   userId: string | undefined,
+  prevState: any,
   formData: FormData
 ) {
   if (!userId) {

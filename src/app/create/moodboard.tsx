@@ -9,7 +9,8 @@ import { cn } from '@/lib/utils';
 import { Session } from 'better-auth';
 import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export interface Theme {
@@ -245,38 +246,33 @@ function SaveMoodboard(props: SaveMoodboardProps) {
     theme,
   } = props;
 
-  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
+
   const saveMoodboardWithUserId = saveMoodboard.bind(null, session?.userId);
+  const [state, formAction, isPending] = useActionState(
+    saveMoodboardWithUserId,
+    null
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsPending(true);
-
-    const formData = new FormData(e.currentTarget);
-    try {
-      const result = await saveMoodboardWithUserId(formData);
-
-      if (!result.success) {
-        throw new Error(result.message);
-      }
-
-      toast.success(result.message, {
-        position: 'bottom-center',
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message, {
-          position: 'bottom-center',
-        });
-      } else {
-        toast.error('An unknown error occurred', {
-          position: 'bottom-center',
-        });
-      }
-    } finally {
-      setIsPending(false);
-    }
+    startTransition(() => formAction(new FormData(e.currentTarget)));
   };
+
+  useEffect(() => {
+    if (state && state.message) {
+      if (state.success) {
+        toast.success(state.message, {
+          position: 'bottom-center',
+        });
+        router.push('/profile/moodboards');
+      } else {
+        toast.error(state.message, {
+          position: 'bottom-center',
+        });
+      }
+    }
+  }, [state, router]);
 
   if (!session) {
     return null;
