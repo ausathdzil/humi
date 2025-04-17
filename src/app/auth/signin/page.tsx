@@ -14,13 +14,19 @@ import { Label } from '@/components/ui/label';
 import { signInWithEmail } from '@/lib/action';
 import { EyeIcon, EyeOffIcon, LoaderIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 
 export default function SignIn() {
   const [state, formAction, isPending] = useActionState(signInWithEmail, null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
+
+  useEffect(() => {
+    if (state && state.success) {
+      window.location.href = '/profile';
+    }
+  }, [state]);
 
   return (
     <Card className="w-full max-w-md">
@@ -94,7 +100,7 @@ export default function SignIn() {
             </p>
           )}
           <p className="font-semibold text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-4">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/auth/signup" className="text-primary">
               Sign up
             </Link>

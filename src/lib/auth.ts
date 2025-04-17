@@ -25,7 +25,7 @@ export const auth = betterAuth({
   session: {
     expiresIn: 3600, // 1 hour
   },
-  plugins: [nextCookies()]
+  plugins: [nextCookies()],
 });
 
 export const getSession = cache(async () => {

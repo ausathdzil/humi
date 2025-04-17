@@ -5,7 +5,6 @@
 import { signIn, signUp } from '@/lib/auth';
 import { google } from '@ai-sdk/google';
 import { generateObject } from 'ai';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const GenerateMoodboardSchema = z.object({
@@ -17,7 +16,7 @@ const GenerateMoodboardSchema = z.object({
   popularity: z.number(),
 });
 
-export type MoodboardData = {
+export interface MoodboardData {
   moodTags: string[];
   colors: string[];
   theme: {
@@ -132,14 +131,19 @@ export async function signInWithEmail(prevState: any, formData: FormData) {
     const error = await signIn(email, password);
 
     if (error) {
+      throw new Error(error.body?.message);
+    }
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
       return {
-        error: error.body?.message || 'Failed to sign in',
+        error: error.message,
       };
     }
 
-    redirect('/profile');
-  } catch (error) {
-    console.error('Sign in error:', error);
     return {
       error: 'An unexpected error occurred. Please try again.',
     };
@@ -181,12 +185,19 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
     const error = await signUp(email, password, name);
 
     if (error) {
+      throw new Error(error.body?.message);
+    }
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
       return {
-        error: error.body?.message || 'Failed to sign up',
+        error: error.message,
       };
     }
-  } catch (error) {
-    console.error(error);
+
     return {
       error: 'An unexpected error occurred. Please try again.',
     };
