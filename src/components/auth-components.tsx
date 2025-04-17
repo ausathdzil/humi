@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { signIn, signOut, useSession } from '@/lib/better-auth/auth-client';
+import { cn } from '@/lib/utils';
 import { LoaderIcon, LogOutIcon, UserRoundIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,23 +11,26 @@ import { SVGProps, useState } from 'react';
 export function AuthInfo() {
   const session = useSession();
 
-  if (!session.data) {
-    return null;
-  }
-
-  return (
-    session.data.user && (
-      <div className="flex items-center gap-2 sm:gap-4">
-        <span className="hidden sm:block text-lg font-bold">
-          👋 Hey, {session.data.user.name}
-        </span>
-        <Button aria-label="Profile" variant="ghost" size="icon" asChild>
-          <Link href="/profile">
-            <UserRoundIcon />
-          </Link>
-        </Button>
-      </div>
-    )
+  return session.data ? (
+    <div className="flex items-center gap-2 sm:gap-4">
+      <span className="hidden sm:block text-lg font-bold">
+        👋 Hey, {session.data.user.name}
+      </span>
+      <Button aria-label="Profile" variant="ghost" size="icon" asChild>
+        <Link href="/profile/moodboards">
+          <UserRoundIcon />
+        </Link>
+      </Button>
+    </div>
+  ) : (
+    <div className="hidden sm:flex items-center justify-end gap-4">
+      <Button variant="secondary" asChild>
+        <Link href="/auth/signin">Sign In</Link>
+      </Button>
+      <Button asChild>
+        <Link href="/auth/signup">Get Started</Link>
+      </Button>
+    </div>
   );
 }
 
@@ -65,14 +69,18 @@ export function SignOutButton({
   );
 }
 
-export function SignInButton() {
+export function SignInWithSpotify({
+  className,
+}: {
+  className?: React.ComponentProps<typeof Button>['className'];
+}) {
   const [loading, setLoading] = useState(false);
 
   return (
     <Button
-      className="bg-green-600 hover:bg-green-600/90 text-white"
+      className={cn('bg-green-600 hover:bg-green-600/90 text-white', className)}
       size="lg"
-      disabled={loading}
+      disabled
       onClick={async () => {
         await signIn.social(
           {

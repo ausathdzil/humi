@@ -63,7 +63,7 @@ export default function RootLayout({
 function Header() {
   return (
     <header className="sticky top-0 z-50 px-8 md:px-16 py-4 md:py-8 transition-all bg-background/90 backdrop-blur-sm">
-      <nav className="flex items-center justify-between">
+      <nav className="flex items-center justify-between gap-4">
         <ul className="flex items-center justify-between gap-4 sm:gap-8">
           <li>
             <Link

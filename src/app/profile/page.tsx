@@ -5,7 +5,7 @@ import { getRecentlyPlayed, getTopTracks } from '@/lib/spotify/data';
 import { SimplifiedArtist } from '@/lib/spotify/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { unauthorized } from 'next/navigation';
+import { redirect, unauthorized } from 'next/navigation';
 import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function Profile() {
@@ -108,11 +108,7 @@ async function TopTracks() {
   const accessToken = await getAccessToken(user.id);
 
   if (!accessToken) {
-    return (
-      <p className="text-muted-foreground text-center">
-        Sign in with Spotify to see your top tracks
-      </p>
-    );
+    redirect('/profile/moodboards');
   }
 
   const topTracks = await getTopTracks(accessToken);

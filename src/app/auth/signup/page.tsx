@@ -29,19 +29,19 @@ export default function SignUp() {
   }, [state]);
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md border-none">
       <CardHeader>
         <CardTitle className="text-lg sm:text-2xl font-bold text-center">
           Create an account
         </CardTitle>
         <CardDescription className="text-center font-semibold">
-          Enter your information to create your account
+          Enter your information
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               name="name"

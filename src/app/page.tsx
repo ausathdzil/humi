@@ -1,5 +1,5 @@
 import { Moodboard, Theme } from '@/app/create/moodboard';
-import { SignInButton } from '@/components/auth-components';
+import { SignInWithSpotify } from '@/components/auth-components';
 import TryHumiButton from '@/components/try-humi-button';
 import {
   Accordion,
@@ -46,7 +46,7 @@ export default function Home() {
                   Visualize Your Music
                 </Link>
               </Button>
-              <SignInButton />
+              <SignInWithSpotify />
             </div>
           </div>
 
@@ -142,18 +142,17 @@ export default function Home() {
             <AccordionItem value="item-2">
               <AccordionTrigger>Do I need a Spotify account?</AccordionTrigger>
               <AccordionContent>
-                You can either sign in with Spotify or you can paste a Spotify
-                track link without signing in. However, signing in allows you to
-                save your moodboards.
+                You can either sign in with Spotify or credentials, or you can
+                paste a Spotify track link without signing in. However, signing
+                in allows you to save your moodboards.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger>Can I share my moodboards?</AccordionTrigger>
               <AccordionContent>
-                Each moodboard can be shared via a unique link or downloaded as
-                an image. You can share your moodboards on social media,
-                messaging apps, or anywhere you&apos;d like to showcase your
-                music taste visually.
+                Each moodboard can be shared via a unique link. You can share
+                your moodboards on social media, messaging apps, or anywhere
+                you&apos;d like to showcase your music taste visually.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
@@ -200,7 +199,7 @@ export default function Home() {
             </span>{' '}
             today.
           </p>
-          <SignInButton />
+          <SignInWithSpotify />
         </div>
       </main>
       <Footer />
@@ -210,7 +209,7 @@ export default function Home() {
 
 function Footer() {
   return (
-    <footer className="font-medium px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+    <footer className="font-medium px-8 md:px-16 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>
@@ -229,7 +228,7 @@ function Footer() {
             <li>
               <Link
                 className="hover:text-foreground transition-colors"
-                href="/about"
+                href="#"
               >
                 About
               </Link>
@@ -237,7 +236,7 @@ function Footer() {
             <li>
               <Link
                 className="hover:text-foreground transition-colors"
-                href="/faqs"
+                href="#"
               >
                 FAQs
               </Link>
@@ -253,7 +252,7 @@ function Footer() {
             <li>
               <Link
                 className="hover:text-foreground transition-colors"
-                href="/privacy-policy"
+                href="#"
               >
                 Privacy Policy
               </Link>

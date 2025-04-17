@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, SignOutButton } from '@/components/auth-components';
+import { SignInWithSpotify, SignOutButton } from '@/components/auth-components';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -8,12 +8,9 @@ import { useSession } from '@/lib/better-auth/auth-client';
 import { cn } from '@/lib/utils';
 import {
   ArchiveIcon,
-  HelpCircleIcon,
   HomeIcon,
-  InfoIcon,
   MenuIcon,
-  SparklesIcon,
-  UserRoundIcon,
+  SparklesIcon
 } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
@@ -29,16 +26,6 @@ const navItems = [
     href: '/',
     icon: <HomeIcon />,
     label: 'Home',
-  },
-  {
-    href: '/about',
-    icon: <InfoIcon />,
-    label: 'About',
-  },
-  {
-    href: '/faqs',
-    icon: <HelpCircleIcon />,
-    label: 'FAQs',
   },
 ];
 
@@ -91,13 +78,13 @@ export function SideNav() {
         >
           <div className="bg-background/90 backdrop-blur-sm size-full grow p-5 flex flex-col rounded-3xl">
             <div className="max-w-md mx-auto">
-              <Drawer.Title className="font-bold mb-2">Humi</Drawer.Title>
+              <Drawer.Title className="font-bold mb-4">Humi</Drawer.Title>
             </div>
             <div className="grow flex flex-col gap-4">
               <ul className="space-y-2">
                 {user && (
                   <>
-                    <li>
+                    {/* <li>
                       <Button
                         className="w-full justify-start"
                         variant="ghost"
@@ -109,7 +96,7 @@ export function SideNav() {
                           Profile
                         </Link>
                       </Button>
-                    </li>
+                    </li> */}
                     <li>
                       <Button
                         className="w-full justify-start"
@@ -122,12 +109,12 @@ export function SideNav() {
                           onClick={handleNavigation}
                         >
                           <ArchiveIcon />
-                          Saved
+                          My Moodboards
                         </Link>
                       </Button>
                     </li>
 
-                    <Separator className="my-4" />
+                    <Separator />
                   </>
                 )}
 
@@ -141,8 +128,8 @@ export function SideNav() {
               </ul>
               <div className="grow" />
               {user ? (
-                <div className="flex flex-col gap-6">
-                  <div className="bg-primary/10 rounded-xl p-4 flex items-center gap-4">
+                <div className="flex flex-col gap-4">
+                  <div className="bg-primary/5 rounded-xl p-4 flex items-center gap-4">
                     <Avatar className="size-12 rounded-md">
                       <AvatarImage src={user.image ?? undefined} />
                       <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
@@ -157,7 +144,18 @@ export function SideNav() {
                   <SignOutButton handleNavigation={handleNavigation} />
                 </div>
               ) : (
-                <SignInButton />
+                <div className="flex flex-col gap-4">
+                  <SignInWithSpotify />
+                  <Separator />
+                  <div className="hidden sm:flex flex-col gap-4 items-center">
+                    <Button className="w-full" size="lg" variant="secondary" asChild>
+                      <Link href="/auth/signin">Sign In</Link>
+                    </Button>
+                    <Button className="w-full" size="lg" asChild>
+                      <Link href="/auth/signup">Get Started</Link>
+                    </Button>
+                  </div>
+                </div>
               )}
             </div>
           </div>

@@ -263,6 +263,7 @@ function SaveMoodboard(props: SaveMoodboardProps) {
       toast.success(result.message, {
         position: 'bottom-center',
       });
+
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message, {

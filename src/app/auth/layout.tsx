@@ -13,7 +13,7 @@ export default async function AuthLayout({
   }
 
   return (
-    <main className="grow flex flex-col items-center px-8 py-4 gap-8">
+    <main className="grow flex flex-col items-center p-8 gap-8">
       {children}
     </main>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import { SignInWithSpotify } from '@/components/auth-components';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -29,17 +30,23 @@ export default function SignIn() {
   }, [state]);
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md border-none">
       <CardHeader>
         <CardTitle className="text-lg sm:text-2xl font-bold text-center">
           Sign in to your account
         </CardTitle>
-        <CardDescription className="text-center font-semibold">
-          Enter your credentials to access your account
+        <CardDescription className="text-center font-medium">
+          Sign In with Spotify or enter your credentials
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
+          <SignInWithSpotify className="w-full mb-6" />
+          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+            <span className="relative z-10 bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -51,7 +58,7 @@ export default function SignIn() {
               defaultValue={state?.inputs?.email}
             />
             {state?.fieldErrors && (
-              <p className="font-semibold text-xs sm:text-sm text-destructive">
+              <p className="font-medium text-xs sm:text-sm text-destructive">
                 {state.fieldErrors.email}
               </p>
             )}
@@ -83,7 +90,7 @@ export default function SignIn() {
               </button>
             </div>
             {state?.fieldErrors && (
-              <p className="font-semibold text-xs sm:text-sm text-destructive">
+              <p className="font-medium text-xs sm:text-sm text-destructive">
                 {state.fieldErrors.password}
               </p>
             )}
@@ -95,14 +102,14 @@ export default function SignIn() {
             Sign In
           </Button>
           {state?.error && (
-            <p className="font-semibold text-sm text-destructive">
+            <p className="font-medium text-sm text-destructive">
               {state.error}
             </p>
           )}
-          <p className="font-semibold text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-4">
+          <p className="font-medium text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-4">
             Don&apos;t have an account?{' '}
             <Link href="/auth/signup" className="text-primary">
-              Sign up
+              Sign Up
             </Link>
           </p>
         </CardFooter>
