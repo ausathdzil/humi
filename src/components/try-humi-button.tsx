@@ -1,10 +1,10 @@
 'use client';
 
-import { XIcon } from 'lucide-react';
+import { ArrowRightIcon, XIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import Form from 'next/form';
 import Image from 'next/image';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,26 +70,29 @@ export default function TryHumiButton() {
             }
           }}
         >
-          <Form
-            className="w-full flex justify-center"
-            action="/moodboard/create"
-          >
-            <div className="relative w-full max-w-[275px] sm:max-w-[400px] lg:max-w-[475px]">
+          <Form className="w-full flex justify-center" action="/create">
+            <div className="w-full max-w-[275px] sm:max-w-[400px] lg:max-w-[475px] relative">
               <Input
                 ref={inputRef}
                 type="text"
                 name="q"
-                className="h-10 pl-10 placeholder:text-sm md:placeholder:text-base"
+                className="peer ps-9 pe-9 text-xs sm:text-sm"
                 placeholder="Enter a Spotify track URL or ID..."
               />
-
               <button
                 type="button"
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary focus:outline-none close-button"
+                className="text-muted-foreground/80 absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50 hover:text-primary"
                 onClick={() => setIsInput(false)}
                 tabIndex={0}
               >
                 <XIcon size={16} />
+              </button>
+              <button
+                className="text-muted-foreground/80 hover:text-primary focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Submit search"
+                type="submit"
+              >
+                <ArrowRightIcon size={16} aria-hidden="true" />
               </button>
             </div>
           </Form>

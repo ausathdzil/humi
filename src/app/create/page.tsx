@@ -1,4 +1,4 @@
-import { MoodboardForm } from '@/app/moodboard/create/moodboard';
+import { MoodboardForm } from '@/app/create/moodboard';
 import { Card, CardContent } from '@/components/ui/card';
 import { getTrack } from '@/lib/data';
 import { Track } from '@/lib/types';

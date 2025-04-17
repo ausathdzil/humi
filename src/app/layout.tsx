@@ -84,7 +84,7 @@ function Header() {
             size="icon"
             asChild
           >
-            <Link href="/moodboard/create">
+            <Link href="/create">
               <SparklesIcon />
             </Link>
           </Button>

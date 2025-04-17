@@ -70,7 +70,7 @@ export function SignInButton() {
 
   return (
     <Button
-      className="bg-green-500 hover:bg-green-500/90"
+      className="bg-green-600 hover:bg-green-600/90 text-white"
       size="lg"
       disabled={loading}
       onClick={async () => {

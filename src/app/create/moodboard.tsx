@@ -10,6 +10,7 @@ import { LoaderIcon, SaveIcon, SparklesIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useActionState, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 export interface Theme {
   background: string;
@@ -38,41 +39,38 @@ export function MoodboardForm({ track }: { track: Track }) {
   const releaseDate = track.album.release_date;
   const popularity = track.popularity;
 
+  const handleGenerate = async () => {
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('artists', artists.join(','));
+    formData.append('albumCover', albumCover);
+    formData.append('duration', duration.toString());
+    formData.append('releaseDate', releaseDate);
+    formData.append('popularity', popularity.toString());
+
+    const result = await generateMoodboard(formData);
+    if (result) {
+      setMoodboardData(result);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    setMoodboardData(null);
+  }, [track.id]);
+
   return (
     <>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          setIsLoading(true);
-
-          const formData = new FormData();
-          formData.append('title', title);
-          formData.append('artists', artists.join(','));
-          formData.append('albumCover', albumCover);
-          formData.append('duration', duration.toString());
-          formData.append('releaseDate', releaseDate);
-          formData.append('popularity', popularity.toString());
-
-          const result = await generateMoodboard(formData);
-          if (result) {
-            setMoodboardData(result);
-          }
-          setIsLoading(false);
-        }}
-      >
-        {!moodboardData && (
-          <Button type="submit" size="lg" disabled={isLoading}>
-            {isLoading ? (
-              <LoaderIcon className="animate-spin" />
-            ) : (
-              <SparklesIcon />
-            )}
-            Generate Moodboard
-          </Button>
-        )}
-      </form>
+      {!moodboardData && (
+        <GenerateMoodboardForm
+          isLoading={isLoading}
+          onSubmit={handleGenerate}
+          buttonText="Generate Moodboard"
+        />
+      )}
       {moodboardData && (
-        <div className="flex flex-col gap-4  items-center justify-center">
+        <div className="flex flex-col gap-4 items-center justify-center">
           <Moodboard
             title={title}
             artists={artists}
@@ -81,19 +79,60 @@ export function MoodboardForm({ track }: { track: Track }) {
             colors={moodboardData.colors}
             theme={moodboardData.theme}
           />
-          <SaveMoodboard
-            session={session.data ? session.data.session : null}
-            trackId={track.id}
-            title={title}
-            artists={artists}
-            albumCover={albumCover}
-            colors={moodboardData.colors}
-            moodTags={moodboardData.moodTags}
-            theme={moodboardData.theme}
-          />
+          <div
+            className={cn(
+              'w-full flex gap-4',
+              !session.data?.session ? 'justify-center' : 'justify-end'
+            )}
+          >
+            <GenerateMoodboardForm
+              isLoading={isLoading}
+              onSubmit={handleGenerate}
+              buttonText="Regenerate"
+              variant="ghost"
+            />
+            <SaveMoodboard
+              session={session.data ? session.data.session : null}
+              trackId={track.id}
+              title={title}
+              artists={artists}
+              albumCover={albumCover}
+              colors={moodboardData.colors}
+              moodTags={moodboardData.moodTags}
+              theme={moodboardData.theme}
+            />
+          </div>
         </div>
       )}
     </>
+  );
+}
+
+interface GenerateMoodboardFormProps {
+  isLoading: boolean;
+  onSubmit: () => Promise<void>;
+  buttonText: string;
+  variant?: 'default' | 'ghost';
+}
+
+function GenerateMoodboardForm({
+  isLoading,
+  onSubmit,
+  buttonText,
+  variant = 'default',
+}: GenerateMoodboardFormProps) {
+  return (
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await onSubmit();
+      }}
+    >
+      <Button type="submit" variant={variant} disabled={isLoading}>
+        {isLoading ? <LoaderIcon className="animate-spin" /> : <SparklesIcon />}
+        {buttonText}
+      </Button>
+    </form>
   );
 }
 
@@ -241,7 +280,7 @@ function SaveMoodboard(props: SaveMoodboardProps) {
       <input type="hidden" name="theme" value={JSON.stringify(theme)} />
       <Button variant="ghost" type="submit" disabled={isPending}>
         {isPending ? <LoaderIcon className="animate-spin" /> : <SaveIcon />}
-        Save Moodboard
+        Save
       </Button>
     </form>
   );

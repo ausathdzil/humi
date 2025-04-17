@@ -1,4 +1,4 @@
-import { Moodboard } from '@/app/moodboard/create/moodboard';
+import { Moodboard } from '@/app/create/moodboard';
 import DeleteMoodboard from '@/app/profile/moodboards/delete-moodboard';
 import { ShareButton } from '@/app/profile/moodboards/share-button';
 import {
@@ -53,7 +53,7 @@ async function Moodboards() {
           <p className="text-sm">Create your first moodboard to see it here</p>
         </div>
         <Button asChild size="lg">
-          <Link href="/moodboard/create">
+          <Link href="/create">
             <SparklesIcon />
             Create your first moodboard
           </Link>

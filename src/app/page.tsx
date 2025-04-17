@@ -1,4 +1,4 @@
-import { Moodboard, Theme } from '@/app/moodboard/create/moodboard';
+import { Moodboard, Theme } from '@/app/create/moodboard';
 import { SignInButton } from '@/components/auth-components';
 import TryHumiButton from '@/components/try-humi-button';
 import {
@@ -41,7 +41,7 @@ export default function Home() {
             </article>
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4">
               <Button asChild className="w-fit" size="lg">
-                <Link href="/moodboard/create">
+                <Link href="/create">
                   <Music4Icon />
                   Visualize Your Music
                 </Link>
@@ -125,7 +125,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-6 md:gap-8">
+        <div className="px-8 md:px-16 py-16 flex flex-col items-center justify-center gap-4 md:gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl text-center">
             Frequently Asked Questions
           </h2>
@@ -189,7 +189,7 @@ export default function Home() {
           </Button>
         </div>
 
-        <div className="bg-primary/5 px-8 md:px-16 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center gap-8">
+        <div className="bg-primary/5 px-8 md:px-16 py-16 md:py-24 flex flex-col items-center justify-center gap-4 md:gap-8">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-center">
             Try Humi for Free
           </h2>
@@ -210,25 +210,25 @@ export default function Home() {
 
 function Footer() {
   return (
-    <footer className="font-medium px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-primary text-primary-foreground">
+    <footer className="font-medium px-8 md:px-16 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
       <Link href="/" className="font-bold text-2xl">
         Humi
       </Link>
       <div className="flex flex-col gap-2">
         <span>Resources</span>
         <nav>
-          <ul className="text-primary-foreground/80 space-y-2">
+          <ul className="text-muted-foreground space-y-2">
             <li>
               <Link
-                className="hover:text-primary-foreground transition-colors"
-                href="/moodboard/create"
+                className="hover:text-foreground transition-colors"
+                href="/create"
               >
                 Moodboard
               </Link>
             </li>
             <li>
               <Link
-                className="hover:text-primary-foreground transition-colors"
+                className="hover:text-foreground transition-colors"
                 href="/about"
               >
                 About
@@ -236,7 +236,7 @@ function Footer() {
             </li>
             <li>
               <Link
-                className="hover:text-primary-foreground transition-colors"
+                className="hover:text-foreground transition-colors"
                 href="/faqs"
               >
                 FAQs
@@ -249,10 +249,10 @@ function Footer() {
       <div className="flex flex-col gap-2">
         <span>Legal</span>
         <nav>
-          <ul className="text-primary-foreground/80 space-y-2">
+          <ul className="text-muted-foreground space-y-2">
             <li>
               <Link
-                className="hover:text-primary-foreground transition-colors"
+                className="hover:text-foreground transition-colors"
                 href="/privacy-policy"
               >
                 Privacy Policy
@@ -264,10 +264,10 @@ function Footer() {
 
       <div className="flex flex-col gap-2">
         <span>Social</span>
-        <ul className="text-primary-foreground/80 space-y-2">
+        <ul className="text-muted-foreground space-y-2">
           <li>
             <a
-              className="hover:text-primary-foreground transition-colors"
+              className="hover:text-foreground transition-colors"
               href="https://github.com/ausathdzil/humi"
               target="_blank"
               rel="noopener noreferrer"
@@ -277,7 +277,7 @@ function Footer() {
           </li>
           <li>
             <a
-              className="hover:text-primary-foreground transition-colors"
+              className="hover:text-foreground transition-colors"
               href="https://www.instagram.com/ausathdzil"
               target="_blank"
               rel="noopener noreferrer"
@@ -287,7 +287,7 @@ function Footer() {
           </li>
           <li>
             <a
-              className="hover:text-primary-foreground transition-colors"
+              className="hover:text-foreground transition-colors"
               href="https://bsky.app/profile/ausathdzil.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -297,7 +297,7 @@ function Footer() {
           </li>
           <li>
             <a
-              className="hover:text-primary-foreground transition-colors"
+              className="hover:text-foreground transition-colors"
               href="https://x.com/ausathdzil"
               target="_blank"
               rel="noopener noreferrer"
@@ -308,22 +308,22 @@ function Footer() {
         </ul>
       </div>
 
-      <div className="col-span-full flex flex-col gap-2 text-sm">
-        <p className="text-primary-foreground/80">
-          Made with 🤍 by{' '}
+      <div className="col-span-full flex flex-col gap-2">
+        <p className="text-muted-foreground">
+          Made with 💙 by{' '}
           <a
             href="https://ausathikram.com"
             target="_blank"
-            className="hover:text-primary-foreground transition-colors"
+            className="hover:text-foreground transition-colors"
           >
             Ausath Ikram
           </a>
         </p>
 
-        <ul className="text-primary-foreground/80 space-y-2">
+        <ul className="text-muted-foreground space-y-2">
           <li>
             <a
-              className="hover:text-primary-foreground transition-colors"
+              className="hover:text-foreground transition-colors"
               href="mailto:mail@ausathikram.com"
             >
               mail@ausathikram.com

@@ -1,6 +1,6 @@
 import { boolean, jsonb, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
-import { Theme } from '@/app/moodboard/create/moodboard';
+import { Theme } from '@/app/create/moodboard';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),

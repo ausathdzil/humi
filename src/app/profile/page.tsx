@@ -58,7 +58,7 @@ async function RecentlyPlayed() {
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {recentlyPlayed.items.map((item, i) => (
-        <Link key={i} href={`/moodboard/create?q=${item.track.id}`}>
+        <Link key={i} href={`/create?q=${item.track.id}`}>
           <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
             <CardContent>
               <div className="flex flex-col gap-2">
@@ -102,7 +102,7 @@ async function TopTracks() {
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {topTracks.items.map((item, i) => (
-        <Link key={i} href={`/moodboard/create?q=${item.id}`}>
+        <Link key={i} href={`/create?q=${item.id}`}>
           <Card className="overflow-hidden group hover:bg-accent/50 transition-colors bg-none border-none shadow-none">
             <CardContent>
               <div className="flex gap-4">

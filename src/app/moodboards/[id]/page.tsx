@@ -1,4 +1,4 @@
-import { Moodboard } from '@/app/moodboard/create/moodboard';
+import { Moodboard } from '@/app/create/moodboard';
 import { MoodboardSkeleton } from '@/app/profile/moodboards/page';
 import { ShareButton } from '@/app/profile/moodboards/share-button';
 import { getMoodboard, getPublicUser } from '@/db/data';
@@ -8,19 +8,7 @@ interface MoodboardPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function MoodboardPage(props: MoodboardPageProps) {
-  return (
-    <main className="grow bg-background">
-      <div className="p-16 flex flex-col items-center justify-center gap-8">
-        <Suspense fallback={<MoodboardSkeleton />}>
-          <PublicMoodboard params={props.params} />
-        </Suspense>
-      </div>
-    </main>
-  );
-}
-
-async function PublicMoodboard(props: MoodboardPageProps) {
+export default async function MoodboardPage(props: MoodboardPageProps) {
   const { id } = await props.params;
 
   const moodboard = await getMoodboard(id);
@@ -37,25 +25,31 @@ async function PublicMoodboard(props: MoodboardPageProps) {
   }
 
   return (
-    <div className="w-full max-w-[600px] flex flex-col items-center justify-center gap-4">
-      <Moodboard
-        title={moodboard.title}
-        artists={moodboard.artists}
-        albumCover={moodboard.albumCover}
-        colors={moodboard.colors}
-        moodTags={moodboard.moodTags}
-        theme={moodboard.theme}
-      />
-      <p className="text-sm text-muted-foreground font-semibold text-center">
-        Created at{' '}
-        {new Date(moodboard.createdAt).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })}{' '}
-        by {user.name}
-      </p>
-      <ShareButton moodboardId={id} />
-    </div>
+    <main className="grow bg-background">
+      <div className="p-16 flex flex-col items-center justify-center gap-8">
+        <Suspense fallback={<MoodboardSkeleton />}>
+          <div className="w-full max-w-[600px] flex flex-col items-center justify-center gap-4">
+            <Moodboard
+              title={moodboard.title}
+              artists={moodboard.artists}
+              albumCover={moodboard.albumCover}
+              colors={moodboard.colors}
+              moodTags={moodboard.moodTags}
+              theme={moodboard.theme}
+            />
+            <p className="text-sm text-muted-foreground font-semibold text-center">
+              Created at{' '}
+              {new Date(moodboard.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}{' '}
+              by {user.name}
+            </p>
+            <ShareButton moodboardId={id} />
+          </div>
+        </Suspense>
+      </div>
+    </main>
   );
 }

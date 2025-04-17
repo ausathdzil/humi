@@ -21,7 +21,7 @@ import { Drawer } from 'vaul';
 
 const navItems = [
   {
-    href: '/moodboard/create',
+    href: '/create',
     icon: <SparklesIcon />,
     label: 'Generate',
   },

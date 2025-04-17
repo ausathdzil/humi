@@ -1,8 +1,8 @@
-import { TrackSearch, TrackSearchSkeleton } from '@/app/moodboard/track-search';
+import { TrackSearch, TrackSearchSkeleton } from '@/app/create/track-search';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
 
-export default function Moodboard({
+export default function CreateLayout({
   children,
 }: {
   children: Readonly<React.ReactNode>;
