@@ -26,7 +26,7 @@ export default async function MoodboardPage(props: MoodboardPageProps) {
 
   return (
     <main className="grow bg-background">
-      <div className="p-16 flex flex-col items-center justify-center gap-8">
+      <div className="p-8 flex flex-col items-center justify-center gap-8">
         <Suspense fallback={<MoodboardSkeleton />}>
           <div className="w-full max-w-[600px] flex flex-col items-center justify-center gap-4">
             <Moodboard

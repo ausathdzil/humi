@@ -81,14 +81,14 @@ export default function TryHumiButton() {
               />
               <button
                 type="button"
-                className="text-muted-foreground/80 absolute inset-y-0 start-0 flex items-center justify-center ps-4 peer-disabled:opacity-50 hover:text-primary"
+                className="text-muted-foreground/80 absolute inset-y-0 start-0 flex items-center justify-center ps-4 peer-disabled:opacity-50 hover:text-primary focus-visible:border-ring focus-visible:ring-ring/50 rounded-s-full transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={() => setIsInput(false)}
                 tabIndex={0}
               >
                 <XIcon size={16} />
               </button>
               <button
-                className="text-muted-foreground/80 hover:text-primary focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-2 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                className="text-muted-foreground/80 hover:text-primary focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-12 items-center justify-center rounded-e-full transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Submit search"
                 type="submit"
               >

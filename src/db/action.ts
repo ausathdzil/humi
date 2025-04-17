@@ -82,6 +82,8 @@ export async function saveMoodboard(
     };
   }
 
+  revalidateTag(`moodboards:${userId}`);
+
   return {
     success: true,
     message: 'Moodboard saved',

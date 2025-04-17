@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function UnauthorizedPage() {
   return (
-    <main className="grow bg-background flex flex-col items-center justify-center">
+    <main className="grow bg-background flex flex-col items-center">
       <div className="p-4 sm:p-8 md:p-16 flex flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold">401 - Unauthorized</h1>
         <p className="text-muted-foreground font-semibold">
@@ -12,7 +12,7 @@ export default function UnauthorizedPage() {
         </p>
         <SignInWithSpotify />
         <p className="text-muted-foreground font-semibold">or</p>
-        <Button variant="secondary" asChild>
+        <Button size="lg" variant="secondary" asChild>
           <Link href="/auth/signin">Sign in with credentials</Link>
         </Button>
       </div>

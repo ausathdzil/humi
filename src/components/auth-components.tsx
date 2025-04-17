@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { signIn, signOut, useSession } from '@/lib/better-auth/auth-client';
 import { cn } from '@/lib/utils';
-import { LoaderIcon, LogOutIcon, UserRoundIcon } from 'lucide-react';
+import { ArchiveIcon, LoaderIcon, LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SVGProps, useState } from 'react';
@@ -18,7 +18,7 @@ export function AuthInfo() {
       </span>
       <Button aria-label="Profile" variant="ghost" size="icon" asChild>
         <Link href="/profile/moodboards">
-          <UserRoundIcon />
+          <ArchiveIcon />
         </Link>
       </Button>
     </div>
@@ -85,7 +85,7 @@ export function SignInWithSpotify({
         await signIn.social(
           {
             provider: 'spotify',
-            callbackURL: '/profile',
+            callbackURL: '/profile/moodboards',
             errorCallbackURL: '/error',
           },
           {

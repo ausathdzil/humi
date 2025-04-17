@@ -25,7 +25,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (state && state.success) {
-      window.location.href = '/profile';
+      window.location.href = '/profile/moodboards';
     }
   }, [state]);
 
@@ -38,15 +38,15 @@ export default function SignIn() {
         <CardDescription className="text-center font-medium">
           Sign In with Spotify or enter your credentials
         </CardDescription>
+        <SignInWithSpotify className="w-full my-4" />
+        <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border font-medium">
+          <span className="relative z-10 bg-background px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
       </CardHeader>
-      <form action={formAction}>
+      <form id="signin-form" action={formAction}>
         <CardContent className="space-y-6">
-          <SignInWithSpotify className="w-full mb-6" />
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -70,12 +70,12 @@ export default function SignIn() {
                 id="password"
                 name="password"
                 className="pe-9"
-                placeholder="Password"
+                placeholder="••••••••••••••••"
                 type={isVisible ? 'text' : 'password'}
                 disabled={isPending}
               />
               <button
-                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-2 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-12 items-center justify-center rounded-e-full transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                 type="button"
                 onClick={toggleVisibility}
                 aria-label={isVisible ? 'Hide password' : 'Show password'}
@@ -97,7 +97,12 @@ export default function SignIn() {
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button
+            form="signin-form"
+            type="submit"
+            className="w-full"
+            disabled={isPending}
+          >
             {isPending && <LoaderIcon className="animate-spin" />}
             Sign In
           </Button>
