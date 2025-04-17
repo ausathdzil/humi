@@ -1,4 +1,6 @@
-import { SignInButton } from '@/components/auth-components';
+import { SignInWithSpotify } from '@/components/auth-components';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function UnauthorizedPage() {
   return (
@@ -8,7 +10,11 @@ export default function UnauthorizedPage() {
         <p className="text-muted-foreground font-semibold">
           Please sign in to continue
         </p>
-        <SignInButton />
+        <SignInWithSpotify />
+        <p className="text-muted-foreground font-semibold">or</p>
+        <Button variant="secondary" asChild>
+          <Link href="/auth/signin">Sign in with credentials</Link>
+        </Button>
       </div>
     </main>
   );

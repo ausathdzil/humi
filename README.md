@@ -5,11 +5,13 @@ Music Moodboard Generator
 
 **Demo**: [humi.ausathikram.com](https://humi.ausathikram.com)
 
+Sign In with Spotify isn't supported yet for this demo because of Spotify Web API development mode limitations
+
 Use this demo account or sign up:
 
-- Email: `humimusic.demo@mail.com`
+- Email: `humi@test.com`
 
-- Password:  `demo12345`
+- Password:  `demo1234`
 
 ## Features
 
@@ -37,7 +39,7 @@ Use this enviroment variables to run locally
 
 1. `BETTER_AUTH_SECRET`: Random string, run `openssl rand 32 -base64` in your terminal
 
-2. `BETTER_AUTH_URL`: http://localhost:3000
+2. `BETTER_AUTH_URL`: [http://localhost:3000](http://localhost:3000)
 
 3. `DATABASE_URL`: Neon database connection string
 
