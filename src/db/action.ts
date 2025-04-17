@@ -6,6 +6,7 @@ import { db } from '@/db';
 import { moodboard } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const SaveMoodboardSchema = z.object({
@@ -30,7 +31,6 @@ const SaveMoodboardSchema = z.object({
 
 export async function saveMoodboard(
   userId: string | undefined,
-  prevState: any,
   formData: FormData
 ) {
   if (!userId) {
