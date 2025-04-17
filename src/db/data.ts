@@ -1,7 +1,7 @@
 import { db } from '@/db';
 import { account, moodboard, user } from '@/db/schema';
 import { getSession } from '@/lib/auth';
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 import { cache } from 'react';
 import {
   unstable_cacheLife as cacheLife,
@@ -89,7 +89,8 @@ export const getUserMoodboards = async (userId: string) => {
   const data = await db
     .select()
     .from(moodboard)
-    .where(eq(moodboard.userId, userId));
+    .where(eq(moodboard.userId, userId))
+    .orderBy(desc(moodboard.createdAt));
 
   return data;
 };
